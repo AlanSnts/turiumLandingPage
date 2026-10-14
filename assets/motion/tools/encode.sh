@@ -4,7 +4,7 @@
 # Saída: ../../assets/video/ (raiz do site) ou a pasta em $OUTDIR.
 HERE=$(cd "$(dirname "$0")" && pwd)
 F=${1:?pasta dos quadros}
-A=${2:-$HERE/../assets/audio/trilha-perdas.wav}
+A=${2:-$HERE/../assets/audio/mix-perdas.wav}
 O=${OUTDIR:-$HERE/../../video}
 mkdir -p "$O"
 ffmpeg -y -hide_banner -loglevel error -framerate 30 -i "$F/f%05d.jpg" -i "$A" -map 0:v -map 1:a \

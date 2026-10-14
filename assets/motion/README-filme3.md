@@ -15,6 +15,8 @@ O filme é feito em HTML/JS com o mesmo motor dos filmes 1 e 2. Ele é gravado q
 | `assets/motion/js/scenes-perdas-b.js` | Cenas 4–6: logística (conceito), rastreabilidade (conceito) e encerramento. |
 | `assets/motion/css/perdas.css` | Estilos próprios do filme 3. |
 | `assets/motion/tools/trilha.py` | Gera a trilha original por código. Gera `assets/motion/assets/audio/trilha-perdas.wav` (não fica no site: é recriada em segundos, sempre igual). |
+| `assets/motion/tools/mix.py` | Posiciona cada fala da locução no tempo das cenas e mistura com a trilha (a trilha abaixa sob a voz). Gera `assets/motion/assets/audio/mix-perdas.wav`. |
+| `assets/motion/assets/audio/narracao-filme3-fenrir.wav` | Locução original (voz Fenrir, 46 s, falas em sequência). |
 | `assets/motion/tools/render_frames.py` | Grava os quadros (Playwright + Chromium). |
 | `assets/motion/tools/encode.sh` | Monta os MP4 (ffmpeg). |
 | `assets/video/filme3-perdas-1080.mp4` / `-720.mp4` (+ `.webm`) | Vídeos finais: MP4 H.264 e, para navegadores sem H.264, WebM VP9. O 720p vai para telas pequenas e economia de dados. |
@@ -61,6 +63,7 @@ Requisitos: Python 3 com `playwright` (Chromium), `numpy`, `scipy` e `ffmpeg`.
 ```sh
 cd assets/motion
 python tools/trilha.py                      # gera assets/audio/trilha-perdas.wav (5 s; determinística)
+python tools/mix.py                         # voz + trilha → assets/audio/mix-perdas.wav
 python tools/render_frames.py /tmp/quadros  # 1.785 quadros JPG (cerca de 5 min)
 sh tools/encode.sh /tmp/quadros             # gera ../../assets/video/filme3-perdas-{1080,720}.{mp4,webm}
 ```
@@ -69,8 +72,16 @@ Para trocar o pôster, extraia um quadro: `ffmpeg -ss 25.8 -i ../../assets/video
 
 ## Locução e trilha
 
-- **Trilha:** original, sintetizada por código (`tools/trilha.py`), sem amostras nem músicas de terceiros.
-- **Locução:** ainda não gravada. O roteiro com minutagem está no documento "Turium — Filme 3: roteiro de narração". Com o arquivo de voz em mãos, rode `sh tools/encode.sh /tmp/quadros voz-e-trilha.wav` com o áudio já mixado, ou peça a mixagem (voz por cima, trilha abaixando sob a fala). Depois ajuste os tempos do `.vtt` à locução final.
+- **Locução:** voz Fenrir (`assets/motion/assets/audio/narracao-filme3-fenrir.wav`). `tools/mix.py` coloca cada fala no instante da sua cena; a lista `PIECES` diz o trecho da voz e onde ele entra no filme. As legendas (`.vtt`) seguem esses mesmos tempos.
+- **Trilha:** original, sintetizada por código (`tools/trilha.py`), sem amostras nem músicas de terceiros. Abaixa sob a voz.
+- **Trocar a voz:** substitua o WAV, ajuste `PIECES` (início/fim de cada fala no novo arquivo) e rode:
+
+```sh
+python tools/trilha.py && python tools/mix.py
+sh tools/encode.sh /tmp/quadros     # usa assets/audio/mix-perdas.wav
+```
+
+Se só o áudio mudou, não é preciso gravar os quadros de novo: troque só a faixa de áudio com `ffmpeg -i video.mp4 -i mix.wav -map 0:v -map 1:a -c:v copy -c:a aac ...`.
 
 ## Atual × futuro
 
