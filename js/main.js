@@ -122,11 +122,20 @@
       var progress = Math.max(0, Math.min(1, -rect.top / travel));
       lcHeader.style.opacity = progress > 0.02 || rect.top < window.innerHeight * 0.4 ? '1' : '0';
       lcFill.style.height = (progress * 100) + '%';
-      lcSteps.forEach(function (step) {
-        var t = parseFloat(step.getAttribute('data-threshold'));
-        var active = progress >= t && progress < t + 0.15;
+      /* a etapa acende quando a ponta da linha chega à bolinha dela
+         (mesma conta do CSS: topo 16px, altura em % do .lc-body, limite 100% - 32px) */
+      var body = lcFill.parentNode.getBoundingClientRect();
+      var headY = body.top + 16 + Math.min(progress * body.height, body.height - 32);
+      lcFill.classList.toggle('is-end', progress * body.height >= body.height - 32); // fim do trilho: a ponta some
+      var last = -1;
+      lcSteps.forEach(function (step, i) {
+        var n = step.querySelector('.lc-node').getBoundingClientRect();
+        if (n.top + n.height / 2 <= headY + 1) last = i;
+      });
+      lcSteps.forEach(function (step, i) {
+        var active = i === last;
         step.classList.toggle('is-active', active);
-        step.classList.toggle('is-past', progress >= t + 0.15);
+        step.classList.toggle('is-past', i < last);
         step.style.transform = active && !reduced ? 'scale(1.05)' : 'scale(1)';
       });
     };

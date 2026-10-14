@@ -507,13 +507,18 @@ html.reel-zoom .reel-track, html.reel-zoom .reel-slot, .reel-card.is-zoomed {
 .lc-header h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(26px, 3vw, 38px); letter-spacing: -0.03em; }
 .lc-header p { margin-top: 10px; font-size: 14.5px; color: var(--concrete); }
 .lc-body { position: relative; width: 100%; max-width: 700px; flex: 1; display: flex; flex-direction: column; justify-content: center; }
-.lc-rail, .lc-fill { position: absolute; left: 50%; top: 16px; width: 1px; transform: translateX(-50%); }
-.lc-rail { bottom: 16px; background: rgba(244,242,238,.1); }
-.lc-fill { height: 0; max-height: calc(100% - 32px); background: linear-gradient(to bottom, var(--gold-strong), var(--gold)); box-shadow: 0 0 12px rgba(243,182,31,.5); transition: height 75ms linear; }
+.lc-rail, .lc-fill { position: absolute; left: 50%; top: 16px; width: 2px; border-radius: 2px; transform: translateX(-50%); }
+.lc-rail { bottom: 16px; background: rgba(244,242,238,.22); }
+.lc-fill { width: 3px; height: 0; max-height: calc(100% - 32px); background: linear-gradient(to bottom, var(--gold-strong), var(--gold)); box-shadow: 0 0 10px rgba(243,182,31,.75), 0 0 24px rgba(243,182,31,.35); transition: height 75ms linear; }
+/* ponta da linha: mostra onde a rolagem está */
+.lc-fill::after { content: ""; position: absolute; left: 50%; bottom: -5px; width: 10px; height: 10px; border-radius: 50%; transform: translateX(-50%); background: var(--gold); box-shadow: 0 0 0 4px rgba(243,182,31,.2), 0 0 16px rgba(243,182,31,.9); transition: opacity 400ms, transform 400ms; }
+.lc-fill.is-end::after { opacity: 0; transform: translateX(-50%) scale(.4); }
 .lc-steps { position: relative; display: flex; flex-direction: column; gap: clamp(20px, 4.4vh, 52px); padding: 16px 0; }
-.lc-step { display: flex; align-items: center; justify-content: space-between; opacity: .3; transition: opacity 500ms, transform 500ms; }
-.lc-step.is-active { opacity: 1; }
-.lc-step.is-past { opacity: .5; }
+.lc-step { display: flex; align-items: center; justify-content: space-between; transition: transform 500ms; }
+/* a opacidade fica só nos lados: a bolinha acesa não pode apagar junto com a etapa */
+.lc-step .lc-side { opacity: .3; transition: opacity 500ms; }
+.lc-step.is-active .lc-side { opacity: 1; }
+.lc-step.is-past .lc-side { opacity: .5; }
 .lc-side { width: 42%; }
 .lc-side.left { text-align: right; padding-right: 32px; }
 .lc-side.right { padding-left: 32px; }
