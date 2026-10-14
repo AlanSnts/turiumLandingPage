@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Turium — Enxergue onde está perdendo</title>
+  <meta name="description" content="Turium, ERP para lojas de materiais de construção: visão analítica do negócio, do Dashboard ao gráfico 3D, em 59,5 segundos.">
+  <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/fonts/inter.css">
+  <link rel="stylesheet" href="assets/fonts/manrope.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/film.css">
+  <link rel="stylesheet" href="css/perdas.css">
+</head>
+<body>
+  <main id="stage" aria-label="Filme do Turium: o lucro começa quando você enxerga onde está perdendo">
+    <div class="bg-grid" aria-hidden="true"></div>
+  </main>
+
+  <div id="player" role="group" aria-label="Controles do filme">
+    <div class="track" id="track" role="slider" tabindex="0" aria-label="Posição do filme" aria-valuemin="0" aria-valuemax="59.5" aria-valuenow="0">
+      <div class="rail"></div>
+      <div class="fillbar" id="fillbar"></div>
+      <div class="head" id="head"></div>
+      <div class="tip" id="tip"></div>
+    </div>
+    <div class="ctrls">
+      <button class="pbtn" id="btn-play" type="button" aria-label="Reproduzir">
+        <svg class="i-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>
+        <svg class="i-pause" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5h3v11H4zM9 2.5h3v11H9z" fill="currentColor"/></svg>
+      </button>
+      <button class="pbtn" id="btn-replay" type="button" aria-label="Ver do início">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8a4.5 4.5 0 1 0 1.4-3.3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M2.5 2.5v3.5H6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+      </button>
+      <span class="time"><b id="t-now">00:00</b> / <span id="t-dur">00:00</span></span>
+      <span class="scene-name" id="scene-name"></span>
+      <span class="spacer"></span>
+      <span class="brand-mini"><i></i>Turium · base de demonstração</span>
+      <button class="pbtn" id="btn-full" type="button" aria-label="Tela cheia">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="gate">
+    <div class="gate-inner">
+      <svg viewBox="0 0 1052 176" role="img" aria-label="Turium"><rect x="0" y="0" width="43" height="43" fill="#F3B61F"/><rect x="66" y="0" width="39" height="176" fill="#F4F2EE"/><g transform="translate(195 41)" fill="none" stroke="#F4F2EE" stroke-width="14"><path transform="translate(7 0)" d="M0 7H95M47.5 7V100"/><path transform="translate(177 0)" d="M7 0V55A38 38 0 0 0 83 55V0"/><path transform="translate(342 0)" d="M0 7H31A23 23 0 0 1 31 53H6L51 93"/><path transform="translate(478 0)" d="M7 0V100"/><path transform="translate(567 0)" d="M7 0V55A38 38 0 0 0 83 55V0"/><path transform="translate(732 0)" d="M7 100V0L59 68L111 0V100"/></g></svg>
+      <div class="gate-load"><i id="gate-bar"></i></div>
+      <button class="gate-btn" id="gate-btn" type="button">Iniciar experiência</button>
+      <span class="gate-note">Filme sem áudio · espaço pausa · F tela cheia</span>
+    </div>
+  </div>
+
+  <script src="js/engine.js" defer></script>
+  <script src="js/kit.js" defer></script>
+  <script src="js/skyline-film.js" defer></script>
+  <script src="js/scenes-perdas.js" defer></script>
+  <script src="js/scenes-perdas-b.js" defer></script>
+  <script src="js/player.js" defer></script>
+</body>
+</html>

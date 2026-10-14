@@ -1,0 +1,284 @@
+/* Turium — filme em HTML. Palco 1920×1080 escalado; tudo dentro dele é posicionado em px do palco. */
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+body {
+  color: var(--paper);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+  cursor: default;
+}
+body.idle { cursor: none; }
+button { font: inherit; color: inherit; }
+
+/* ---------- Palco ---------- */
+#stage {
+  position: absolute;
+  left: 0; top: 0;
+  width: 1920px; height: 1080px;
+  transform-origin: 0 0;
+  overflow: hidden;
+  background: var(--ink);
+  contain: strict;
+}
+.bg-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(244, 242, 238, .045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(244, 242, 238, .045) 1px, transparent 1px),
+    linear-gradient(rgba(244, 242, 238, .028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(244, 242, 238, .028) 1px, transparent 1px);
+  background-size: 200px 200px, 200px 200px, 40px 40px, 40px 40px;
+  background-position: -40px -20px, -40px -20px, -40px -20px, -40px -20px;
+  -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 48%, #000 35%, transparent 85%);
+          mask-image: radial-gradient(ellipse 75% 70% at 50% 48%, #000 35%, transparent 85%);
+}
+
+.scene { position: absolute; inset: 0; display: none; }
+.layer { position: absolute; left: 0; top: 0; }
+.fill { position: absolute; inset: 0; }
+
+/* ---------- Câmera: a tela nativa (2560×1032) é o material ---------- */
+.shot {
+  position: absolute; left: 0; top: 0;
+  width: 2560px; height: 1032px;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+.shot > img, .shot > video, .shot .face {
+  position: absolute; left: 0; top: 0;
+  width: 2560px; height: 1032px;
+  display: block;
+  border-radius: 22px;
+}
+.shot .face { overflow: hidden; }
+.shot .face img { width: 100%; height: 100%; display: block; }
+.shot .rim {
+  position: absolute; inset: 0;
+  border-radius: 22px;
+  box-shadow: 0 0 0 2px rgba(244, 242, 238, .08), 0 60px 160px -40px rgba(0, 0, 0, .9);
+  pointer-events: none;
+}
+.spot {
+  position: absolute;
+  border-radius: 14px;
+  pointer-events: none;
+  box-shadow: 0 0 0 9000px rgba(9, 11, 14, 0);
+  border: 0 solid var(--gold);
+}
+.ring {
+  position: absolute;
+  border: 3px solid var(--gold);
+  border-radius: 10px;
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* ---------- Tipografia do filme ---------- */
+.cap {
+  position: absolute;
+  left: 160px; top: 930px;
+  font: 700 64px/1.05 var(--font-display);
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+}
+.cap .ln, .ln { display: block; overflow: hidden; padding: .04em 0 .16em; }
+.ln > span { display: block; will-change: transform; }
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.kicker { font: 500 22px/1.2 var(--font-mono); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.gold { color: var(--gold); }
+.muted { color: var(--concrete); }
+.num { font-variant-numeric: tabular-nums; }
+.shade-b {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 300px;
+  background: linear-gradient(to top, rgba(9, 11, 14, .92), rgba(9, 11, 14, 0));
+  pointer-events: none;
+}
+
+/* Linhas de cota (o fio do filme) */
+.hline, .vline { position: absolute; background: var(--gold); transform-origin: 0 50%; }
+.hline { height: 3px; }
+.vline { width: 3px; transform-origin: 50% 0; }
+.tick { position: absolute; width: 3px; height: 28px; background: var(--gold); margin-top: -13px; }
+.dash-h {
+  position: absolute; height: 3px; transform-origin: 0 50%;
+  background: repeating-linear-gradient(90deg, var(--gold) 0 14px, transparent 14px 24px);
+}
+.dash-v {
+  position: absolute; width: 3px; transform-origin: 50% 0;
+  background: repeating-linear-gradient(180deg, var(--gold) 0 12px, transparent 12px 22px);
+}
+
+/* Logo desenhado */
+.logo svg { display: block; overflow: visible; }
+.logo .tl-letter { stroke-dasharray: 1; stroke-dashoffset: 1; }
+
+/* Caixas técnicas */
+.tbox {
+  position: absolute;
+  border: 2px solid rgba(243, 182, 31, .75);
+  background: rgba(243, 182, 31, .07);
+  border-radius: 10px;
+}
+.tbox .idx { position: absolute; left: 22px; top: 18px; font: 500 18px/1 var(--font-mono); color: var(--gold); letter-spacing: .1em; }
+.tbox .lbl { position: absolute; left: 22px; bottom: 20px; font: 700 40px/1 var(--font-display); letter-spacing: -0.03em; }
+
+/* Medida certa */
+.box {
+  position: absolute;
+  border: 2px solid rgba(243, 182, 31, .8);
+  background: rgba(243, 182, 31, .13);
+  border-radius: 6px;
+}
+.box b { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); text-align: center; font: 600 22px/1 var(--font-mono); color: var(--muted); letter-spacing: .06em; }
+.hatch {
+  position: absolute;
+  background: repeating-linear-gradient(45deg, rgba(243, 182, 31, .55) 0 3px, transparent 3px 12px);
+  border-left: 3px dashed var(--gold);
+}
+.readout { position: absolute; }
+.readout .k { font: 500 20px/1 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--concrete); }
+.readout .v { margin-top: 14px; font: 700 84px/1 var(--font-display); letter-spacing: -0.04em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.readout .v small { font-size: .42em; font-weight: 600; letter-spacing: 0; color: var(--muted); margin-left: 8px; }
+.readout .bar { height: 3px; background: var(--line); margin-bottom: 22px; }
+.readout .bar i { display: block; height: 100%; background: var(--gold); transform-origin: 0 50%; }
+
+.clipwin {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #0E1116;
+  box-shadow: 0 0 0 2px rgba(244, 242, 238, .08), 0 50px 120px -30px rgba(0, 0, 0, .9);
+}
+.clipwin video, .clipwin img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; }
+
+/* Etiquetas sobre a tela */
+.tag {
+  position: absolute;
+  display: inline-flex; align-items: center; gap: 14px;
+  padding: 12px 18px;
+  background: rgba(9, 11, 14, .88);
+  border: 1.5px solid rgba(243, 182, 31, .6);
+  border-radius: 10px;
+  font: 600 26px/1 var(--font-body);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.tag .mono { font-size: 18px; color: var(--gold); letter-spacing: .12em; }
+
+/* Bruto → líquido */
+.money { font: 800 150px/1 var(--font-display); letter-spacing: -0.045em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.money small { font-size: .38em; font-weight: 700; letter-spacing: 0; margin-right: 14px; color: var(--muted); }
+
+/* Equipe */
+.slice { position: absolute; background-repeat: no-repeat; }
+.prow { position: absolute; left: 0; width: 1600px; height: 84px; }
+.prow .sep { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--line); }
+.prow .pin { position: absolute; left: -36px; top: 36px; width: 12px; height: 12px; background: var(--gold); }
+
+/* Claro / escuro */
+.wipe-edge { position: absolute; width: 6px; height: 2200px; background: var(--gold); transform-origin: 50% 50%; box-shadow: 0 0 40px rgba(243, 182, 31, .45); }
+
+/* Encerramento */
+.cta {
+  position: absolute;
+  display: inline-flex; align-items: center; gap: 16px;
+  height: 84px; padding: 0 40px;
+  background: var(--gold); color: var(--ink);
+  border-radius: 10px;
+  font: 700 32px/1 var(--font-body);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.cta svg { width: 26px; height: 26px; }
+
+/* ---------- Player ---------- */
+#player {
+  position: fixed; left: 0; right: 0; bottom: 0;
+  padding: 0 28px 20px;
+  background: linear-gradient(to top, rgba(0, 0, 0, .78), rgba(0, 0, 0, 0));
+  transition: opacity 320ms cubic-bezier(.22, 1, .36, 1), transform 320ms cubic-bezier(.22, 1, .36, 1);
+  z-index: 10;
+}
+body.idle #player { opacity: 0; transform: translateY(12px); pointer-events: none; }
+.track {
+  position: relative;
+  height: 28px;
+  cursor: pointer;
+  touch-action: none;
+}
+.track .rail { position: absolute; left: 0; right: 0; top: 13px; height: 2px; background: rgba(244, 242, 238, .22); }
+.track .fillbar { position: absolute; left: 0; top: 13px; height: 2px; background: var(--gold); transform-origin: 0 50%; width: 100%; transform: scaleX(0); }
+.track .mark { position: absolute; top: 9px; width: 2px; height: 10px; background: rgba(244, 242, 238, .45); }
+.track .head { position: absolute; top: 7px; width: 14px; height: 14px; margin-left: -7px; background: var(--gold); }
+.track .tip {
+  position: absolute; bottom: 30px;
+  transform: translateX(-50%);
+  padding: 6px 10px;
+  background: rgba(20, 24, 29, .96);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font: 500 12px/1 var(--font-mono);
+  letter-spacing: .08em;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 140ms;
+}
+.track:hover .tip { opacity: 1; }
+.ctrls { display: flex; align-items: center; gap: 14px; margin-top: 6px; }
+.pbtn {
+  width: 40px; height: 40px;
+  display: inline-grid; place-items: center;
+  border: 1px solid rgba(244, 242, 238, .22);
+  border-radius: 6px;
+  background: rgba(9, 11, 14, .5);
+  cursor: pointer;
+}
+.pbtn:hover { border-color: var(--gold); }
+.pbtn svg { width: 16px; height: 16px; }
+.pbtn:focus-visible, .gate-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+#btn-play .i-pause { display: none; }
+body.playing #btn-play .i-pause { display: block; }
+body.playing #btn-play .i-play { display: none; }
+.time { font: 500 13px/1 var(--font-mono); letter-spacing: .08em; color: var(--muted); font-variant-numeric: tabular-nums; }
+.time b { color: var(--paper); font-weight: 500; }
+.scene-name { font: 500 12px/1 var(--font-mono); letter-spacing: .16em; text-transform: uppercase; color: var(--concrete); }
+.ctrls .spacer { flex: 1; }
+.brand-mini { display: inline-flex; align-items: center; gap: 10px; font: 500 12px/1 var(--font-mono); letter-spacing: .16em; color: var(--concrete); text-transform: uppercase; }
+.brand-mini i { width: 8px; height: 8px; background: var(--gold); }
+
+/* Tela inicial / carregamento */
+#gate {
+  position: fixed; inset: 0;
+  display: grid; place-items: center;
+  background: var(--ink);
+  z-index: 20;
+  transition: opacity 600ms cubic-bezier(.22, 1, .36, 1);
+}
+#gate.gone { opacity: 0; pointer-events: none; }
+.gate-inner { display: grid; justify-items: center; gap: 36px; }
+.gate-inner svg { width: 340px; height: auto; }
+.gate-load { width: 340px; height: 2px; background: var(--line); }
+.gate-load i { display: block; height: 100%; width: 100%; background: var(--gold); transform-origin: 0 50%; transform: scaleX(0); transition: transform 200ms linear; }
+.gate-btn {
+  display: none;
+  height: 56px; padding: 0 28px;
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  background: transparent;
+  font: 600 13px/1 var(--font-mono);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.gate-btn:hover { background: var(--gold); color: var(--ink); }
+#gate.ask .gate-btn { display: inline-flex; align-items: center; }
+#gate.ask .gate-load { display: none; }
+.gate-note { font: 500 12px/1 var(--font-mono); letter-spacing: .14em; color: var(--concrete); text-transform: uppercase; }

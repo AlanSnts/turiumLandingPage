@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Turium — Sua loja sob controle. Do balcão à gestão.</title>
+  <meta name="description" content="Turium é o ERP para lojas de materiais de construção. App desktop, local-first: a internet caiu, a operação local continua.">
+  <meta name="theme-color" content="#090B0E">
+  <link rel="icon" href="assets/motion/assets/brand/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/motion/assets/fonts/inter.css">
+  <link rel="stylesheet" href="assets/motion/assets/fonts/manrope.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/inteligencia.css">
+</head>
+<body>
+
+<a class="skip-link" href="#hero">Pular para o conteúdo</a>
+
+<!-- ================= HEADER — cópia de "Turion landing page/index-v3.html" (links apontam para as seções deste site) ================= -->
+<header id="site-header">
+  <nav aria-label="Principal" class="t-nav" style="--border-gradient: linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,0), rgba(255,255,255,.18)); --border-radius-before: .75rem">
+    <a class="t-nav-logo" href="#topo">
+      <img alt="Turium" height="176" src="assets/motion/assets/brand/turium-logo.svg" width="1052">
+    </a>
+    <div class="t-nav-links">
+      <a href="#em-acao">Filme<span aria-hidden="true"></span></a>
+      <a href="#recursos">Recursos<span aria-hidden="true"></span></a>
+      <a href="#como-funciona">Sistema<span aria-hidden="true"></span></a>
+      <a href="#controle">Controle<span aria-hidden="true"></span></a>
+      <a href="#local-first">Confiabilidade<span aria-hidden="true"></span></a>
+    </div>
+    <div class="t-nav-actions">
+      <a class="t-nav-demo" href="#comecar">Agendar demo</a>
+      <a class="t-nav-download" href="#comecar">
+        <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+        <span class="sm-only">Baixar</span><span class="sm-up">Baixar Turium</span>
+      </a>
+      <button aria-controls="mobile-menu" aria-expanded="false" aria-label="Abrir menu" class="t-nav-toggle" id="menu-toggle" type="button">
+        <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewBox="0 0 24 24"><path class="menu-open" d="M4 7h16M4 12h16M4 17h16"/><path class="menu-close hidden" d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+  </nav>
+  <div class="t-mobile-menu" hidden id="mobile-menu">
+    <a href="#em-acao">Filme</a>
+    <a href="#recursos">Recursos</a>
+    <a href="#como-funciona">Sistema</a>
+    <a href="#controle">Controle</a>
+    <a href="#local-first">Confiabilidade</a>
+    <div class="t-mobile-ctas">
+      <a class="m-demo" href="#comecar">Agendar demo</a>
+      <a class="m-download" href="#comecar">Baixar Turium</a>
+    </div>
+  </div>
+</header>
+
+<main id="topo">
+
+<!-- ================= HERO ================= -->
+<!-- Cópia do hero de "Turion landing page/index-v3.html" (classes Tailwind convertidas para CSS em styles.css, prefixo t-) -->
+<section class="t-hero" id="hero" aria-labelledby="hero-title">
+  <!-- Fundo fluido em WebGL próprio (js/hero-bg.js). Sem WebGL, o script aplica um brilho estático em CSS. -->
+  <canvas aria-hidden="true" id="hero-bg"></canvas>
+  <div aria-hidden="true" id="hero-veil"></div>
+
+  <div class="t-hero-copy">
+    <p class="enter t-hero-badge" style="--d:.2s"><span aria-hidden="true"></span>Gestão para materiais de construção</p>
+    <h1 class="enter t-hero-title" id="hero-title" style="--d:.35s">
+      <span class="t-grad">Sua loja </span><span class="text-gold">sob controle.</span><br>
+      <span class="t-grad t-grad-2">Do estoque ao financeiro.</span>
+    </h1>
+    <p class="enter t-hero-lead" style="--d:.5s">O Turium reúne vendas, estoque, caixa, pedidos, clientes, entregas e gestão financeira em um único sistema desenvolvido para lojas de materiais de construção.</p>
+    <div class="enter t-hero-ctas" style="--d:.65s">
+      <a class="t-btn-gold" href="#comecar">
+        <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Baixar Turium
+      </a>
+      <!-- Glow beam (design system), recolorido para Tractor Gold -->
+      <a class="t-btn-beam" href="#em-acao">
+        <span aria-hidden="true" class="b-rest"></span>
+        <span aria-hidden="true" class="b-hover"></span>
+        <span aria-hidden="true" class="b-ring"><span></span></span>
+        <span aria-hidden="true" class="b-fill"></span>
+        <span class="b-label">Assistir ao filme<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></span>
+      </a>
+    </div>
+    <p class="enter t-hero-alt" style="--d:.75s">Prefere ver ao vivo? <a href="#comecar">Agendar demonstração</a></p>
+    <ul class="enter t-hero-checks" style="--d:.85s">
+      <li><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Feito para materiais de construção</li>
+      <li><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Funciona mesmo sem internet</li>
+      <li><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Estoque e financeiro conectados</li>
+    </ul>
+  </div>
+
+  <!-- Palco do produto: notebook com o dashboard (fundo recortado) + versão mobile à frente -->
+  <div class="t-stage">
+    <div aria-hidden="true" class="t-stage-glow"></div>
+    <div class="parallax" data-parallax="0.06">
+      <figure class="t-hero-device">
+        <img alt="Turium no computador: dashboard com vendas de hoje, pedidos, vendas do mês, gráfico dos últimos 30 dias, formas de pagamento e produtos mais vendidos." decoding="async" fetchpriority="high" width="1578" height="823" sizes="(min-width: 1152px) 1104px, 94vw" src="img/turium-laptop.webp" srcset="img/turium-laptop-960.webp 960w, img/turium-laptop.webp 1578w">
+        <figcaption class="sr-only">Representação do Turium em um notebook.</figcaption>
+      </figure>
+    </div>
+    <!-- O celular é desenhado em 300px e escalado (--phone-scale), como no original. -->
+    <div class="t-phone-slot parallax" data-parallax="-0.05">
+      <div class="t-hero-phone">
+        <img class="owner-phone" src="img/turium-mobile.webp" width="720" height="1415" alt="Turium no celular: resumo de vendas, pedidos, caixa e financeiro da loja">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROVA RÁPIDA — cópia de "Turion landing page/index.html" ================= -->
+<section aria-label="Resumo" class="t-proof">
+  <div class="t-proof-grid">
+    <div class="reveal t-proof-item" style="--d:0s">
+      <p class="k">Setor</p>
+      <p class="t">Feito para materiais de construção</p>
+      <p class="d">Categorias, unidades e rotina do balcão já previstas.</p>
+    </div>
+    <div class="reveal t-proof-item" style="--d:.08s">
+      <p class="k">Local-first</p>
+      <p class="t">Funciona sem internet</p>
+      <p class="d">Os dados ficam no computador da loja.</p>
+    </div>
+    <div class="reveal t-proof-item" style="--d:.16s">
+      <p class="k">Integrado</p>
+      <p class="t">Venda, estoque e caixa juntos</p>
+      <p class="d">Uma venda baixa o estoque e entra no caixa.</p>
+    </div>
+    <div class="reveal t-proof-item" style="--d:.24s">
+      <p class="k">Rede local</p>
+      <p class="t">Vários computadores</p>
+      <p class="d">Balcão, caixa e escritório na mesma base.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CARROSSEL DE VÍDEOS ================= -->
+<section id="em-acao" aria-labelledby="reel-title">
+  <div class="container reel-head">
+    <div class="section-head reveal">
+      <span class="eyebrow">Em ação</span>
+      <h2 class="h-section" id="reel-title">Veja o Turium trabalhando.</h2>
+      <p class="lead">Uma venda real da base de demonstração, do primeiro item ao dinheiro na conta.</p>
+    </div>
+  </div>
+  <div class="reel" id="reel">
+    <div class="reel-sticky">
+      <div class="reel-track" id="reel-track"></div>
+      <p class="reel-hint">Role para percorrer os vídeos</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COMO FUNCIONA (motion.so #how) ================= -->
+<section class="section" id="como-funciona" aria-labelledby="how-title">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Como funciona</span>
+      <h2 class="h-section" id="how-title">Do orçamento ao fechamento, <span class="text-gold">sem trocar de sistema.</span></h2>
+      <p class="lead">Balcão, estoque e financeiro falam a mesma língua. Cada venda já entra no lugar certo.</p>
+    </div>
+
+    <div class="how-grid">
+      <div class="how-visual" aria-hidden="true">
+        <div class="how-sticky"><div>
+          <div class="panel-frame">
+            <div class="panel">
+              <div class="quote">
+                <span class="quote-tag">Orçamento em segundos</span>
+                <div class="quote-line"><span>Porcelanato Acetinado 60x60 cm<small>18 m² + 10% de perda</small></span><span class="val">14 CX</span></div>
+                <div class="quote-line"><span>Argamassa AC-II 20 kg<small>Calculada pela área</small></span><span class="val">8 SC</span></div>
+                <div class="quote-line"><span>Rejunte flexível 1 kg<span class="caret"></span></span><span class="val">4 UN</span></div>
+                <div class="quote-foot"><span class="pill">Cliente: Obra Jd. Europa</span><span class="pill">Pix</span><span class="quote-total"><b>R$ 1.701,46</b><span class="quote-go">→</span></span></div>
+              </div>
+            </div>
+            <div class="panel panel-shot"><img src="assets/motion/assets/film/calculadora.webp" alt="" loading="lazy"></div>
+            <div class="panel panel-shot"><img src="assets/motion/assets/film/pedido.webp" alt="" loading="lazy"></div>
+            <div class="panel panel-shot"><img src="assets/motion/assets/film/estoque.webp" alt="" loading="lazy"></div>
+            <div class="panel panel-shot"><img src="assets/motion/assets/film/fluxo.webp" alt="" loading="lazy"></div>
+            <!-- Diferencial: cartão animado 18 m² → 8 CX (cópia de "Turion landing page/index.html", seção #materiais) -->
+            <div class="panel panel-dif">
+              <div class="dif-fit">
+                <div aria-label="Exemplo de venda por medida: o cliente pede 18 metros quadrados de piso vendido em caixas de 2,52 metros quadrados; o Turium calcula 8 caixas, fornece 20,16 metros quadrados com sobra de 2,16 e baixa 8 caixas do estoque." class="dif-card" role="group">
+                  <div class="dif-head">
+                    <div>
+                      <p class="dif-kicker">Item do pedido · PED-000087</p>
+                      <p class="dif-title">Porcelanato 60x60 acetinado</p>
+                    </div>
+                    <span class="dif-base">Base do estoque: CX</span>
+                  </div>
+                  <dl class="dif-grid dif-grid-3">
+                    <div class="dif-cell" data-step style="--d:.1s"><dt>Cliente pede</dt><dd>18 m²</dd></div>
+                    <div class="dif-cell" data-step style="--d:.45s"><dt>Unidade de venda</dt><dd>CX</dd></div>
+                    <div class="dif-cell dif-wide" data-step style="--d:.8s"><dt>1 CX</dt><dd>2,52 m²</dd></div>
+                  </dl>
+                  <div class="dif-formula" data-step style="--d:1.15s">
+                    <p>18 ÷ 2,52 = <span class="hi">7,14 CX</span> <span class="lo">→ arredonda para cima (embalagem inteira)</span></p>
+                  </div>
+                  <!-- 8 caixas: 7,14 cobrem o pedido, o resto é sobra -->
+                  <div aria-hidden="true" class="dif-boxes">
+                    <div class="dif-boxes-row">
+                      <span class="box-fill" style="--fill:#F3B61F; --d:1.5s"></span>
+                      <span class="box-fill" style="--fill:#F3B61F; --d:1.6s"></span>
+                      <span class="box-fill" style="--fill:#F3B61F; --d:1.7s"></span>
+                      <span class="box-fill" style="--fill:#F3B61F; --d:1.8s"></span>
+                      <span class="box-fill" style="--fill:#F3B61F; --d:1.9s"></span>
+                      <span class="box-fill" style="--fill:#F3B61F; --d:2.0s"></span>
+                      <span class="box-fill" style="--fill:#F3B61F; --d:2.1s"></span>
+                      <span class="dif-last"><span class="box-fill dif-part" style="--fill:#F3B61F; --d:2.2s"></span><span class="box-fill dif-rest" style="--fill:rgba(243,182,31,.12); --d:2.35s"></span></span>
+                    </div>
+                    <div class="dif-boxes-legend"><span class="req">← 18 m² solicitados →</span><span class="left">sobra</span></div>
+                  </div>
+                  <dl class="dif-grid dif-grid-4">
+                    <div class="dif-cell dif-ok" data-step style="--d:2.6s"><dt>Resultado</dt><dd>8 CX</dd></div>
+                    <div class="dif-cell" data-step style="--d:2.85s"><dt>Fornecido</dt><dd>20,16 m²</dd></div>
+                    <div class="dif-cell" data-step style="--d:3.1s"><dt>Sobra</dt><dd>2,16 m²</dd><p>+12,0%</p></div>
+                    <div class="dif-cell dif-bad" data-step style="--d:3.35s"><dt>Estoque</dt><dd>−8 CX</dd><p>100 → 92 CX</p></div>
+                  </dl>
+                </div>
+                <p class="dif-note">Exemplo com a regra de arredondamento comercial do Turium. O estoque baixa na finalização da venda.</p>
+              </div>
+            </div>
+          </div>
+          <div class="progress"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        </div></div>
+      </div>
+
+      <div class="how-steps">
+        <div class="how-step">
+          <div class="how-step-inner">
+            <div class="step-label"><span class="step-num">01</span><span class="step-kicker">O balcão</span></div>
+            <h3>Orçamento</h3>
+            <p>O vendedor encontra o produto por código, nome ou unidade e monta o orçamento enquanto o cliente ainda está no balcão.</p>
+            <div class="chips">
+              <span class="chip"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5"/></svg>Busca rápida</span>
+              <span class="chip"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.5" y="2.5" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>m², CX, BR, SC</span>
+              <span class="chip"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="5.5" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 14c.6-2.6 2.6-4 5-4s4.4 1.4 5 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>Cliente na hora</span>
+            </div>
+            <div class="how-mobile-panel"></div>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="how-step-inner">
+            <div class="step-label"><span class="step-num">02</span><span class="step-kicker">A medida</span></div>
+            <h3>Calculadora de m²</h3>
+            <p>Informe a área. O Turium converte em caixas, considera a perda e já leva a quantidade certa para o orçamento.</p>
+            <div class="chips">
+              <span class="chip"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 14L14 2M2 9l5 5M9 2l5 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>Área → caixas</span>
+              <span class="chip"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5"/></svg>Margem de perda</span>
+            </div>
+            <div class="how-mobile-panel"></div>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="how-step-inner">
+            <div class="step-label"><span class="step-num">03</span><span class="step-kicker">A venda</span></div>
+            <h3>Pedido e caixa</h3>
+            <p>O orçamento vira pedido com um clique. Pix, cartão ou dinheiro: o caixa fecha sem retrabalho.</p>
+            <div class="chips">
+              <span class="chip"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="4" width="12" height="8" rx="1" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M2 7h12" stroke="currentColor" stroke-width="1.5"/></svg>Pix e cartão</span>
+              <span class="chip"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Orçamento → pedido</span>
+            </div>
+            <div class="how-mobile-panel"></div>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="how-step-inner">
+            <div class="step-label"><span class="step-num">04</span><span class="step-kicker">O estoque</span></div>
+            <h3>Estoque em dia</h3>
+            <p>Cada venda dá baixa na hora. Você sabe o que tem, o que falta e o que comprar.</p>
+            <div class="chips">
+              <span class="chip"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5l6 3.2v6.6l-6 3.2-6-3.2V4.7z M2 4.7l6 3.2 6-3.2M8 8v6.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>Baixa automática</span>
+              <span class="chip"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 12h12M4 12V7M8 12V4M12 12V9" stroke="currentColor" stroke-width="1.5"/></svg>Recebimento</span>
+            </div>
+            <div class="how-mobile-panel"></div>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="how-step-inner">
+            <div class="step-label"><span class="step-num">05</span><span class="step-kicker">A gestão</span></div>
+            <h3>Financeiro</h3>
+            <p>Fluxo de caixa, contas a receber e o valor líquido de cada venda, sem planilha paralela.</p>
+            <div class="chips">
+              <span class="chip"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 12l4-4 3 3 5-6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>Fluxo de caixa</span>
+              <span class="chip"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v12M11 4.5H6.5a2 2 0 0 0 0 4h3a2 2 0 0 1 0 4H5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>Bruto → líquido</span>
+            </div>
+            <div class="how-mobile-panel"></div>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="how-step-inner">
+            <div class="step-label"><span class="step-num">06</span><span class="step-kicker">Diferencial</span></div>
+            <h3>Não é um ERP genérico adaptado para sua loja.</h3>
+            <p>O Turium foi pensado desde o início para a rotina de quem vende material de construção.</p>
+            <p>Por isso ele entende situações que sistemas genéricos normalmente complicam: caixas, metros, m², unidades comerciais, orçamentos, entregas, margem e estoque.</p>
+            <ul class="dif-list">
+              <li><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Arredonda sempre para cima, até a embalagem inteira: nunca entrega menos do que o cliente pediu.</li>
+              <li><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Mostra a sobra antes de fechar: nada é arredondado em silêncio.</li>
+              <li><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Margem de obra para perdas e recortes só quando o vendedor escolher.</li>
+              <li><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Frações onde a unidade permite: 1,5 m de fio, 0,5 kg de prego.</li>
+            </ul>
+            <div class="how-mobile-panel"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="how-ctas reveal">
+      <a class="btn btn-ghost" href="#comecar">Agende uma demonstração</a>
+      <a class="btn btn-gold" href="#comecar"><span class="shimmer"></span>Experimente grátis</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTROLE: CADA PASSO TEM UM RESPONSÁVEL (layout ORAVIA lifecycle) =================
+     A mesma venda de "Como funciona", agora vista pelo dono: quem fez, quando e com que permissão.
+     Nomes e valores são exemplos ilustrativos. -->
+<section class="lifecycle" id="controle" aria-labelledby="lc-title">
+  <div class="lc-sticky">
+    <div class="lc-dots" aria-hidden="true"></div>
+    <div class="lc-inner">
+      <div class="lc-header">
+        <h2 id="lc-title">Cada passo tem um responsável</h2>
+        <p>A mesma venda, vista pelo dono: quem fez, quando e com que permissão.</p>
+      </div>
+      <div class="lc-body">
+        <div class="lc-rail" aria-hidden="true"></div>
+        <div class="lc-fill" aria-hidden="true"></div>
+        <div class="lc-steps">
+          <div class="lc-step" data-threshold="0.1">
+            <div class="lc-side left"><span class="lc-kicker">01 Vendedor</span><h3>Pedido com autor</h3><p>Nome, data e hora em cada pedido.</p></div>
+            <span class="lc-node"></span>
+            <div class="lc-side right"><div class="lc-card row"><span class="lc-ico"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="5.5" r="2.6" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M3 13.5c.6-2.6 2.6-4 5-4s4.4 1.4 5 4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span><span><span class="k">Pedido · Prumo Materiais</span><span class="v">Carlos · Vendedor · 10:42</span></span></div></div>
+          </div>
+          <div class="lc-step" data-threshold="0.25">
+            <div class="lc-side left"><div class="lc-card row"><span class="lc-ico"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="7" width="9" height="6.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span><span><span class="k">Desconto de 8%</span><span class="v">Aguardando o gerente</span></span></div></div>
+            <span class="lc-node"></span>
+            <div class="lc-side right"><span class="lc-kicker">02 Desconto</span><h3>O gerente autoriza</h3><p>Sem entregar a senha a ninguém.</p></div>
+          </div>
+          <div class="lc-step" data-threshold="0.4">
+            <div class="lc-side left"><span class="lc-kicker">03 Caixa</span><h3>Caixa com operador</h3><p>Aberto, movimentado e fechado por alguém identificado.</p></div>
+            <span class="lc-node"></span>
+            <div class="lc-side right"><div class="lc-card row"><span class="lc-ico"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 4.5h11v7h-11z" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="8" r="1.6" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span><span><span class="k">Fechamento · Ana</span><span class="v">Diferença justificada</span></span></div></div>
+          </div>
+          <div class="lc-step" data-threshold="0.55">
+            <div class="lc-side left"><div class="lc-card"><div class="lc-bars" aria-hidden="true"><i></i><i></i><i></i></div><span class="v">−14 CX registrado. Correção vira novo movimento.</span></div></div>
+            <span class="lc-node"></span>
+            <div class="lc-side right"><span class="lc-kicker">04 Estoque</span><h3>Nada se apaga</h3><p>Cada entrada, saída e ajuste fica no histórico.</p></div>
+          </div>
+          <div class="lc-step" data-threshold="0.7">
+            <div class="lc-side left"><span class="lc-kicker">05 Cancelamento</span><h3>Só com permissão</h3><p>E fica registrado quem cancelou.</p></div>
+            <span class="lc-node"></span>
+            <div class="lc-side right"><span class="lc-paid">Autorizado pelo gerente<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="2.2"/></svg></span></div>
+          </div>
+          <div class="lc-step" data-threshold="0.85">
+            <div class="lc-side left"><span class="lc-hash">Auditoria · quem, o quê, quando</span></div>
+            <span class="lc-node"></span>
+            <div class="lc-side right"><span class="lc-kicker">06 Dono</span><h3>Você vê tudo</h3><p>Sem precisar estar no balcão.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LOCAL-FIRST ================= -->
+<section class="section" id="local-first" aria-labelledby="lf-title">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Local-first</span>
+      <h2 class="h-section" id="lf-title">A internet caiu? <span class="text-gold">A operação local continua.</span></h2>
+      <p class="lead">O Turium roda no computador da loja. O balcão não para porque o provedor parou.</p>
+    </div>
+
+    <div class="bento">
+      <article class="tile span-8 reveal">
+        <div class="tile-grid" aria-hidden="true"></div>
+        <div class="tile-body">
+          <span class="tile-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 8.5a15 15 0 0 1 20 0M5 12a10.5 10.5 0 0 1 14 0M8.5 15.5a5.5 5.5 0 0 1 7 0M12 19h.01" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M3 3l18 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          <h3 class="h-card">O balcão não espera a conexão</h3>
+          <p class="desc">Sem internet, as vendas continuam sendo registradas no banco local, uma atrás da outra.</p>
+          <div class="net-demo">
+            <div class="sales-feed" id="sales-feed" aria-live="off"></div>
+            <div class="net-status">
+              <div class="net-row"><span>Internet</span><span class="state" id="net-state"><i></i><span>Conectada</span></span></div>
+              <div class="net-row"><span>Banco local</span><span class="state"><i></i><span>Conectado</span></span></div>
+              <div class="net-row"><span>Vendas registradas</span><b class="mono" id="sales-count">0</b></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="tile span-4 reveal" style="--d:100ms">
+        <div class="tile-grid" aria-hidden="true"></div>
+        <div class="tile-body">
+          <span class="tile-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="8" ry="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 5.5v13c0 1.7 3.6 3 8 3s8-1.3 8-3v-13M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></span>
+          <h3 class="h-card">Seus dados na sua loja</h3>
+          <p class="desc">Os dados ficam armazenados no computador da loja, com o banco local sempre à mão.</p>
+          <div class="stack" aria-hidden="true">
+            <div class="ghost g1"></div>
+            <div class="ghost g2"></div>
+            <div class="front">
+              <span class="state"><i></i></span>
+              <div class="meta"><div><span>Banco local</span><span>conectado</span></div><div class="bar"><i></i></div></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="tile span-12 reveal">
+        <div class="tile-grid" aria-hidden="true"></div>
+        <div class="tile-body desk-row">
+          <div>
+            <span class="tile-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 20h8M12 16v4" stroke="currentColor" stroke-width="1.8"/></svg></span>
+            <h3 class="h-card">App desktop, no ritmo do balcão</h3>
+            <p class="desc">Abre no computador da loja e responde na hora. Tema escuro ou claro, do jeito que a equipe preferir.</p>
+          </div>
+          <div class="desk-shot">
+            <img src="assets/motion/assets/screens/dashboard-light-crop-1120.webp" alt="Turium no tema claro" loading="lazy" width="1120" height="630">
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RECURSOS ================= -->
+<section class="section" id="recursos" aria-labelledby="feat-title">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Recursos</span>
+      <h2 class="h-section" id="feat-title">Tudo o que a loja precisa. <span class="text-gold">Em um só lugar.</span></h2>
+    </div>
+    <div class="features">
+      <article class="feature reveal">
+        <div class="feature-shot"><img src="assets/motion/assets/screens/calculadora-m2-dark-960.webp" alt="Calculadora de m² do Turium" loading="lazy"></div>
+        <div class="feature-body"><h3>Calculadora de m²</h3><p>Área em metros, resposta em caixas. Com perda e arredondamento.</p></div>
+      </article>
+      <article class="feature reveal" style="--d:80ms">
+        <div class="feature-shot"><img src="assets/motion/assets/film/estoque.webp" alt="Tela de estoque do Turium" loading="lazy"></div>
+        <div class="feature-body"><h3>Estoque</h3><p>Saldo atualizado a cada venda e a cada recebimento.</p></div>
+      </article>
+      <article class="feature reveal" style="--d:160ms">
+        <div class="feature-shot"><img src="assets/motion/assets/film/recebimento.webp" alt="Tela de recebimento do Turium" loading="lazy"></div>
+        <div class="feature-body"><h3>Recebimento</h3><p>A mercadoria entra conferida e já aparece no estoque.</p></div>
+      </article>
+      <article class="feature reveal">
+        <div class="feature-shot"><img src="assets/motion/assets/film/fluxo.webp" alt="Fluxo de caixa do Turium" loading="lazy"></div>
+        <div class="feature-body"><h3>Fluxo de caixa</h3><p>Entradas e saídas em uma linha do tempo clara.</p></div>
+      </article>
+      <article class="feature reveal" style="--d:80ms">
+        <div class="feature-shot"><img src="assets/motion/assets/film/liquidacao.webp" alt="Bruto e líquido de uma venda no Turium" loading="lazy"></div>
+        <div class="feature-body"><h3>Bruto → líquido</h3><p>Veja quanto cada venda deixa de fato no caixa.</p></div>
+      </article>
+      <article class="feature reveal" style="--d:160ms">
+        <div class="feature-shot"><img src="assets/motion/assets/film/usuarios.webp" alt="Usuários e permissões no Turium" loading="lazy"></div>
+        <div class="feature-body"><h3>Equipe</h3><p>Cada pessoa com o acesso certo para a sua função.</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= INTELIGÊNCIA DE NEGÓCIOS — filme 3 (assets/video/, fontes em assets/motion/perdas.html) ================= -->
+<section class="section intel" id="inteligencia" aria-labelledby="intel-title">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Inteligência de negócios</span>
+      <h2 class="h-section" id="intel-title">Você sabe onde sua empresa <span class="text-gold">está perdendo dinheiro?</span></h2>
+      <p class="lead">Vender mais é importante. Entender seus números é o que ajuda a proteger suas margens, identificar desperdícios e planejar o crescimento.</p>
+    </div>
+
+    <figure class="intel-player reveal" id="intel-player" style="--d:120ms">
+      <div class="intel-frame">
+        <video playsinline muted preload="none"
+               data-poster="assets/video/filme3-perdas-poster.webp"
+               data-src-hd="assets/video/filme3-perdas-1080.mp4"
+               data-src-sd="assets/video/filme3-perdas-720.mp4"
+               aria-label="Filme: o lucro começa quando você enxerga onde está perdendo" aria-describedby="intel-desc">
+          <track kind="captions" srclang="pt-BR" label="Português (Brasil)" src="assets/video/filme3-perdas.pt-BR.vtt" default>
+        </video>
+        <button class="intel-start" type="button" aria-label="Assistir ao filme com som (59 segundos)">
+          <span class="disc"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg></span>
+          <span class="lbl">Assistir · 59 s</span>
+        </button>
+        <button class="intel-unmute" type="button" aria-label="Ativar som e assistir do início">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6h3l4-3v10l-4-3H2z" fill="currentColor"/><path d="M11.5 5.5a3.5 3.5 0 0 1 0 5M13 3.8a6 6 0 0 1 0 8.4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>Ativar som
+        </button>
+        <div class="intel-bar" role="group" aria-label="Controles do filme">
+          <button class="ib" type="button" data-a="play" aria-label="Pausar">
+            <svg class="i-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>
+            <svg class="i-pause" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5h3v11H4zM9 2.5h3v11H9z" fill="currentColor"/></svg>
+          </button>
+          <div class="intel-track" aria-hidden="true"><i><b></b></i></div>
+          <span class="intel-time">0:00 / 0:59</span>
+          <button class="ib" type="button" data-a="sound" aria-label="Ativar som">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6h3l4-3v10l-4-3H2z" fill="currentColor"/><path d="M11.5 5.5a3.5 3.5 0 0 1 0 5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg><span class="txt">Ativar som</span>
+          </button>
+          <button class="ib" type="button" data-a="cc" aria-pressed="true" aria-label="Legendas"><span>CC</span></button>
+          <button class="ib" type="button" data-a="full" aria-label="Tela cheia">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="intel-glow" aria-hidden="true"></div>
+      <figcaption id="intel-desc">
+        Filme de 59 s com trilha e legendas. Dashboard real da base de demonstração; o gráfico 3D usa <b>dados ilustrativos</b> de uma loja fictícia.
+        As cenas de logística e responsabilidades mostram um <b>conceito de funcionalidade futura</b>.
+      </figcaption>
+    </figure>
+
+    <div class="intel-cta reveal" style="--d:200ms">
+      <a class="btn btn-gold" href="#comecar"><span class="shimmer"></span>Conheça a inteligência de negócios do Turium<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
+      <a class="btn btn-ghost" href="#planos">Comparar planos</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MOBILE — cópia da seção #mobile de "Turion landing page/index-v3.html" ================= -->
+<section class="t-mobile" id="mobile" aria-labelledby="mobile-title">
+  <div class="t-mobile-grid">
+    <div class="reveal t-mobile-copy">
+      <p class="t-mobile-kicker">Mobile <span>App do proprietário · em fase de testes</span></p>
+      <h2 id="mobile-title">Gestão no <span class="text-gold">bolso</span>.</h2>
+      <p class="t-mobile-lead">Acompanhe o resultado das suas lojas pelo celular, de onde estiver.</p>
+      <ul class="t-mobile-list">
+        <li><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Receita líquida, lucro bruto e margem por período: hoje, 7 dias, 30 dias ou mês.</li>
+        <li><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Todas as lojas do grupo somadas e comparadas lado a lado.</li>
+        <li><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Meta do mês, contas vencidas e produtos em estoque baixo.</li>
+        <li><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>O app mostra quando os números foram atualizados pela última vez.</li>
+      </ul>
+      <div class="t-mobile-note">
+        <p><strong>O app é para acompanhar.</strong> Vender, receber e movimentar estoque continuam no computador da loja. Os números chegam ao celular quando a loja está conectada à internet.</p>
+      </div>
+    </div>
+    <div class="t-mobile-stage">
+      <div aria-hidden="true" class="tech-grid t-mobile-grid-bg"></div>
+      <div aria-hidden="true" class="t-mobile-glow"></div>
+      <div class="float-y t-phone-wrap">
+        <!-- Representação do app do proprietário (rótulos das telas reais do app). -->
+        <div aria-label="Representação do app do proprietário: visão consolidada do grupo com receita líquida, lucro bruto, margem, gráfico de vendas do período, comparação entre lojas e meta do mês." class="t-phone" role="img">
+          <div aria-hidden="true" class="t-phone-screen">
+            <div class="t-phone-status"><span>9:41</span><span class="notch"></span><span class="batt"><span></span></span></div>
+            <div class="t-phone-body">
+              <div class="t-phone-top">
+                <div class="who"><img alt="" height="64" src="assets/motion/assets/brand/favicon.svg" width="64"><div><p class="lbl">Grupo</p><p class="name">Lojas Exemplo</p></div></div>
+                <span class="upd"><span></span>Atualizado</span>
+              </div>
+              <div class="t-phone-tabs"><span>Hoje</span><span class="on">7 dias</span><span>30 dias</span><span>Mês</span></div>
+              <p class="t-phone-sec">Consolidado do grupo</p>
+              <div class="t-phone-kpis">
+                <div class="box"><p class="k">Receita líquida</p><p class="v">R$ 48.320</p></div>
+                <div class="box"><p class="k">Lucro bruto</p><p class="v">R$ 14.910</p></div>
+                <div class="box"><p class="k">Margem bruta</p><p class="v">30,9%</p></div>
+                <div class="box"><p class="k">A receber vencido</p><p class="v bad">R$ 2.140</p></div>
+              </div>
+              <div class="box t-phone-chart">
+                <p class="k">Vendas ao longo do período</p>
+                <div class="bars"><span style="height:45%"></span><span style="height:60%"></span><span style="height:38%"></span><span style="height:72%"></span><span style="height:66%"></span><span class="hi" style="height:100%"></span><span style="height:30%"></span></div>
+              </div>
+              <div class="box t-phone-compare">
+                <p class="k">Comparação entre lojas</p>
+                <div class="rows">
+                  <div><div class="row"><span>Loja Centro</span><span class="m">R$ 31.200</span></div><div class="track"><div style="width:100%"></div></div></div>
+                  <div><div class="row"><span>Loja Bairro</span><span class="m">R$ 17.120</span></div><div class="track"><div class="dim" style="width:55%"></div></div></div>
+                </div>
+              </div>
+              <div class="box t-phone-goal"><span class="k">Meta do mês</span><span class="v">64% atingido</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONECTIVIDADE (dados em js/connectivity.js, montagem em js/connectivity-section.js) ================= -->
+<section class="section net" id="conectividade" aria-labelledby="net-heading">
+  <div class="net-bg" aria-hidden="true"></div>
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Conectividade</span>
+      <h2 class="h-section" id="net-heading">Conectividade inteligente <span class="text-gold">para a operação da sua loja.</span></h2>
+      <p class="lead">Do uso individual à operação integrada em rede: o Turium conecta vendas, caixa, gestão e atendimento em uma estrutura pensada para crescer com o seu negócio.</p>
+    </div>
+
+    <div class="net-tabs reveal" id="net-tabs" role="tablist" aria-label="Estrutura de cada plano"></div>
+
+    <div class="net-panel reveal" id="net-panel" role="tabpanel">
+      <div class="net-info">
+        <div class="net-info-text" aria-live="polite">
+          <p class="net-devices"></p>
+          <h3 class="net-title"></h3>
+          <p class="net-text"></p>
+        </div>
+        <ul class="net-highlights"></ul>
+      </div>
+      <div class="net-stage" id="net-stage" role="img">
+        <svg class="net-links" aria-hidden="true" preserveAspectRatio="none"></svg>
+      </div>
+      <div class="net-foot">
+        <p class="net-note">Representação ilustrativa do ecossistema do Turium.</p>
+        <div class="net-legend" id="net-legend" aria-label="Destacar um dispositivo na ilustração"></div>
+      </div>
+    </div>
+
+    <div class="net-benefits reveal" id="net-benefits"></div>
+
+    <div class="net-cta reveal">
+      <div>
+        <h3>Escolha a estrutura ideal para a sua loja</h3>
+        <p>Comece com uma operação simples ou evolua para uma rede integrada com gestão centralizada.</p>
+      </div>
+      <a class="btn btn-gold" href="#planos"><span class="shimmer"></span>Ver planos do Turium<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PLANOS (dados em js/plans.js, montagem em js/pricing.js) ================= -->
+<section class="section" id="planos" aria-labelledby="plans-title">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Planos</span>
+      <h2 class="h-section" id="plans-title">Escolha o Turium ideal <span class="text-gold">para o seu negócio.</span></h2>
+      <p class="lead">Do primeiro atendimento à gestão de uma rede de lojas. Escolha a solução que acompanha o crescimento da sua empresa.</p>
+    </div>
+    <div class="plans-grid" id="plans-grid"></div>
+    <noscript><p class="plans-noscript">Ative o JavaScript para ver os planos e preços do Turium.</p></noscript>
+    <ul class="plans-notes" id="plans-notes" aria-label="Informações importantes"></ul>
+  </div>
+</section>
+
+<!-- ================= CTA FINAL ================= -->
+<section class="cta" id="comecar" aria-labelledby="cta-title">
+  <div class="cta-lights" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="container">
+    <span class="eyebrow reveal">Comece hoje</span>
+    <h2 class="h-display reveal" id="cta-title" style="--d:80ms;margin-top:22px">Turium.<br><span>Sua loja sob controle.</span></h2>
+    <p class="lead reveal" style="--d:160ms">Do balcão à gestão, num sistema que trabalha mesmo quando a internet não trabalha.</p>
+    <div class="hero-ctas reveal" style="--d:240ms">
+      <a class="btn btn-gold" href="#comecar"><span class="shimmer"></span>Experimente grátis<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
+      <a class="btn btn-ghost" href="#comecar">Agende uma demonstração</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<!-- Cópia do footer de "Turion landing page/index-v3.html" (links apontam para as seções deste site) -->
+<footer class="t-footer">
+  <div class="t-footer-grid">
+    <div class="t-footer-brand">
+      <a href="#topo"><img alt="Turium" height="176" loading="lazy" src="assets/motion/assets/brand/turium-logo.svg" width="1052"></a>
+      <p>Sistema de gestão para lojas de materiais de construção. Instalado no computador da loja, com os dados da loja.</p>
+    </div>
+    <div class="t-footer-cols">
+      <nav aria-label="Produto">
+        <h2>Produto</h2>
+        <ul>
+          <li><a href="#recursos">Recursos</a></li>
+          <li><a href="#como-funciona">Sistema</a></li>
+          <li><a href="#mobile">App do proprietário</a></li>
+          <li><a href="#comecar">Download</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Suporte">
+        <h2>Suporte</h2>
+        <ul>
+          <li><a href="#comecar">Fale conosco</a></li>
+          <li><a href="#comecar">Agendar demonstração</a></li>
+          <li class="soon">Central de ajuda <span>(em breve)</span></li>
+        </ul>
+      </nav>
+      <div>
+        <h2>Legal</h2>
+        <ul>
+          <li class="soon">Termos de uso <span>(em breve)</span></li>
+          <li class="soon">Política de privacidade <span>(em breve)</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div aria-hidden="true" class="t-footer-mark">
+    <div class="tech-grid"></div>
+    <!-- Wordmark oficial (mesma geometria do app), só em contorno decorativo. -->
+    <svg fill="none" stroke="rgba(243,182,31,.22)" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="14" viewBox="0 0 857 114"><g><path d="M0 7H95M47.5 7V100" transform="translate(7 0)"/><path d="M7 0V55A38 38 0 0 0 83 55V0" transform="translate(177 0)"/><path d="M0 7H31A23 23 0 0 1 31 53H6L51 93" transform="translate(342 0)"/><path d="M7 0V100" transform="translate(478 0)"/><path d="M7 0V55A38 38 0 0 0 83 55V0" transform="translate(567 0)"/><path d="M7 100V0L59 68L111 0V100" transform="translate(732 0)"/></g></svg>
+    <div class="fade"></div>
+  </div>
+  <div class="t-footer-copy">
+    <p>© <span id="year">2026</span> Turium. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<script src="js/vendor/gsap.min.js"></script>
+<script src="js/vendor/ScrollTrigger.min.js"></script>
+<script src="js/videos.js"></script>
+<script src="js/carousel.js"></script>
+<script src="js/main.js"></script>
+<script src="js/plans.js"></script>
+<script src="js/pricing.js"></script>
+<script src="js/connectivity.js"></script>
+<script src="js/connectivity-section.js"></script>
+<script src="js/hero-bg.js"></script>
+<script src="js/inteligencia.js"></script>
+</body>
+</html>

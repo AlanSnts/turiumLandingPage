@@ -1,0 +1,96 @@
+/* Turium Motion — tokens
+   Paleta oficial do Turium. Tema escuro é o padrão; o claro é ativado por data-theme="light". */
+
+:root {
+  /* Paleta oficial */
+  --ink: #090B0E;
+  --graphite: #14181D;
+  --surface: #1B2027;
+  --line: #2B3139;
+  --concrete: #858E98;
+  --muted: #AAB1B9;
+  --paper: #F4F2EE;
+  --gold: #F3B61F;
+  --gold-strong: #D89D0E;
+  --ok: #3FA66A;
+  --bad: #D65353;
+  --info: #4A8FC7;
+
+  /* Semântica — escuro */
+  --bg: var(--ink);
+  --bg-2: var(--graphite);
+  --card: var(--surface);
+  --border: var(--line);
+  --text: var(--paper);
+  --text-2: var(--muted);
+  --text-3: var(--concrete);
+  --accent: var(--gold);
+  --accent-hover: var(--gold-strong);
+  --accent-ink: var(--ink);          /* texto sobre o dourado */
+  --accent-text: var(--gold);        /* dourado usado como texto */
+  --cota: var(--gold);
+  --grid-line: rgba(244, 242, 238, 0.045);
+  --frame-shadow: 0 40px 90px -40px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(244, 242, 238, 0.06);
+  --hatch: rgba(243, 182, 31, 0.28);
+  --box-fill: rgba(243, 182, 31, 0.14);
+  --box-stroke: rgba(243, 182, 31, 0.75);
+  --screen-bg: #0D1114;            /* fundo da tela capturada (escuro) */
+
+  /* Tipografia */
+  --font-display: "Manrope", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", Consolas, "Liberation Mono", monospace;
+
+  /* Layout */
+  --container: 1240px;
+  --gutter: 24px;
+  --radius-ui: 6px;
+  --radius-frame: 14px;
+  --section-y: 128px;
+
+  /* Motion */
+  --dur-tap: 140ms;
+  --dur-ui: 240ms;
+  --dur-reveal: 560ms;
+  --dur-draw: 900ms;
+  --dur-count: 1100ms;
+  --ease-assenta: cubic-bezier(.22, 1, .36, 1);
+  --ease-prumo: cubic-bezier(.65, 0, .35, 1);
+  --ease-tap: cubic-bezier(.3, 0, .2, 1);
+  --stagger: 70ms;
+  --dist-s: 8px;
+  --dist-m: 16px;
+  --dist-l: 32px;
+
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --bg: var(--paper);
+  --bg-2: #ECE9E3;
+  --card: #FFFFFF;
+  --border: #DAD6CF;
+  --text: var(--ink);
+  --text-2: #3D434A;
+  --text-3: #646C75;          /* 4,8:1 sobre paper */
+  --accent: var(--gold);
+  --accent-hover: var(--gold-strong);
+  --accent-ink: var(--ink);
+  --accent-text: #8A6408;     /* dourado legível sobre claro: 4,8:1 */
+  --cota: #8A6408;
+  --grid-line: rgba(9, 11, 14, 0.05);
+  --frame-shadow: 0 40px 90px -45px rgba(9, 11, 14, 0.35), 0 0 0 1px rgba(9, 11, 14, 0.06);
+  --hatch: rgba(138, 100, 8, 0.25);
+  --box-fill: rgba(243, 182, 31, 0.22);
+  --box-stroke: #8A6408;
+  --screen-bg: #F4F6F8;            /* fundo da tela capturada (claro) */
+
+  color-scheme: light;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --gutter: 16px;
+    --section-y: 80px;
+  }
+}
