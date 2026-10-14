@@ -91,3 +91,23 @@
 @media (prefers-reduced-motion: reduce) {
   .intel-start, .intel-bar, .intel-start .disc { transition: none; }
 }
+
+/* ---------- Carrossel "Em ação": botão dos filmes com narração em arquivo de vídeo (js/carousel.js) ---------- */
+.reel-play {
+  position: absolute; inset: 0; z-index: 2; border: 0; padding: 0; cursor: pointer;
+  display: grid; place-items: center; align-content: center; gap: 14px;
+  background: radial-gradient(ellipse at center, rgba(9, 11, 14, .25), rgba(9, 11, 14, .7));
+  color: var(--paper);
+}
+.reel-play[hidden] { display: none; }
+.reel-play .rp-btn {
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 14px 22px; border-radius: 8px; border: 1.5px solid var(--gold); background: rgba(9, 11, 14, .75);
+  font: 600 clamp(11px, 1.1vw, 14px)/1 var(--font-mono, ui-monospace, monospace); letter-spacing: .16em; text-transform: uppercase;
+  transition: background 200ms ease, color 200ms ease;
+}
+.reel-play .rp-btn svg { width: 14px; height: 14px; color: var(--gold); }
+.reel-play:hover .rp-btn, .reel-play:focus-visible .rp-btn { background: var(--gold); color: var(--ink); }
+.reel-play:hover .rp-btn svg, .reel-play:focus-visible .rp-btn svg { color: var(--ink); }
+.reel-play .rp-note { font: 500 11px/1 var(--font-mono, ui-monospace, monospace); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.reel-card.is-inactive .reel-play { pointer-events: none; }

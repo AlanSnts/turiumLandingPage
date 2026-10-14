@@ -42,11 +42,22 @@
     }
     if (item.type === 'video') {
       var v = el('video');
-      v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'metadata';
-      v.setAttribute('muted', ''); v.setAttribute('playsinline', '');
+      v.playsInline = true; v.setAttribute('playsinline', '');
+      if (item.narrated) {
+        /* filme com narração: não toca sozinho; o visitante dá o play (com som) nos controles do próprio vídeo */
+        v.preload = 'none';
+        v.setAttribute('aria-label', item.title || 'Vídeo do Turium');
+      } else {
+        v.muted = true; v.loop = true; v.preload = 'metadata';
+        v.setAttribute('muted', '');
+      }
       if (item.poster) v.poster = item.poster;
       if (item.webm) { var s1 = el('source'); s1.src = item.webm; s1.type = 'video/webm'; v.appendChild(s1); }
       var s2 = el('source'); s2.src = item.src; s2.type = 'video/mp4'; v.appendChild(s2);
+      if (item.captions) {
+        var tr = el('track'); tr.kind = 'captions'; tr.srclang = 'pt-BR'; tr.label = 'Português (Brasil)'; tr.src = item.captions; tr.default = true;
+        v.appendChild(tr);
+      }
       return v;
     }
     var ph = el('div', 'reel-placeholder');
@@ -55,6 +66,31 @@
       '<div><div class="ph-title"></div><div class="ph-sub">Vídeo em produção</div></div>';
     ph.querySelector('.ph-title').textContent = item.title || 'Novo vídeo';
     return ph;
+  }
+
+  /* Filme com narração em arquivo de vídeo: botão "Assistir com narração" (como nos filmes em HTML).
+     Os controles do vídeo aparecem depois do primeiro play; ao terminar, o botão volta. */
+  function addPlayButton(card, item) {
+    var v = card.firstChild;
+    var go = el('button', 'reel-play',
+      '<span class="rp-btn"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>Assistir com narração</span>' +
+      '<span class="rp-note"></span>');
+    go.type = 'button';
+    go.setAttribute('aria-label', 'Assistir com narração: ' + (item.title || 'vídeo do Turium'));
+    go.querySelector('.rp-note').textContent = (item.meta || '').replace(/^Filme com narração · /, '') + ' · com áudio';
+    go.addEventListener('click', function (e) {
+      if (!card._on) return;            // fora do centro, o clique do cartão o traz para o centro
+      e.stopPropagation();
+      engaged = true;
+      v.controls = true;
+      var p = v.play(); if (p && p.catch) p.catch(function () { go.hidden = false; });
+    });
+    v.addEventListener('play', function () { go.hidden = true; v.controls = true; });
+    v.addEventListener('ended', function () {
+      go.hidden = false; v.controls = false; try { v.currentTime = 0; } catch (e) {}
+      advanceFrom(cards.indexOf(card));
+    });
+    card.appendChild(go);
   }
 
   /* ---------- Monta os cartões a partir do array ---------- */
@@ -66,6 +102,10 @@
     var card = el('div', 'reel-card is-inactive');
     card.style.zIndex = String(VIDEOS.length - i);
     card.appendChild(buildMedia(item));
+    if (item.type === 'video' && item.narrated) addPlayButton(card, item);
+    if (item.type === 'embed') {
+      card.firstChild.addEventListener('load', function () { if (card._on && engaged) postAuto(i, true); });
+    }
     slot.appendChild(card);
     var meta = el('div', 'reel-meta');
     meta.innerHTML = '<b></b><span></span>';
@@ -88,6 +128,32 @@
     window.scrollTo({ top: Math.max(outerTop, target), behavior: reduced ? 'auto' : 'smooth' });
   }
 
+  /* ---------- Reprodução em sequência ----------
+     O primeiro filme sempre espera o clique do visitante. Depois desse primeiro play,
+     cada filme que chega ao centro começa sozinho (com voz). Quem avisa o "primeiro play"
+     é o próprio filme (postMessage { turium: 'started' }) ou o botão do cartão de vídeo. */
+  var engaged = false;
+  function postAuto(i, on) {
+    try { cards[i].firstChild.contentWindow.postMessage({ turium: 'autoplay', on: on }, '*'); } catch (e) {}
+  }
+  window.addEventListener('message', function (e) {
+    if (!e.data || (e.data.turium !== 'started' && e.data.turium !== 'ended')) return;
+    for (var i = 0; i < cards.length; i++) {
+      if (VIDEOS[i].type !== 'embed' || cards[i].firstChild.contentWindow !== e.source) continue;
+      engaged = true;
+      if (e.data.turium === 'ended') advanceFrom(i);
+      return;
+    }
+  });
+  /* Ao terminar um filme, o carrossel rola até o próximo; ao chegar ao centro, ele começa sozinho.
+     Cartões "em breve" não contam: depois do último filme, o carrossel para. */
+  function advanceFrom(i) {
+    var next = i + 1;
+    if (next >= cards.length || VIDEOS[next].type === 'placeholder') return;
+    if (zoomed === i) setZoom(i, false);
+    centerOn(slots[next]);
+  }
+
   /* ---------- Controle de mídia ---------- */
   function pauseEmbed(iframe) {
     try {
@@ -104,9 +170,16 @@
     card.firstChild.style.pointerEvents = on ? '' : 'none';
     var media = card.firstChild;
     var type = VIDEOS[i].type;
-    if (type === 'embed' && !on) pauseEmbed(media);
+    if (type === 'embed') {
+      if (!on) { postAuto(i, false); pauseEmbed(media); }
+      else if (engaged) postAuto(i, true);
+    }
     if (type === 'video') {
-      if (on) { var p = media.play(); if (p && p.catch) p.catch(function () {}); }
+      if (VIDEOS[i].narrated) {                               // com narração: toca sozinho só depois do primeiro play
+        if (!on) media.pause();
+        else if (engaged) { media.controls = true; var pn = media.play(); if (pn && pn.catch) pn.catch(function () {}); }
+      }
+      else if (on) { var p = media.play(); if (p && p.catch) p.catch(function () {}); }
       else media.pause();
     }
   }

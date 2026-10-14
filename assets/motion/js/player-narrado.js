@@ -262,7 +262,11 @@
           F.T += dt + err * 0.12; // a voz manda: puxa o filme aos poucos para ela
         }
       }
-      if (F.T >= F.duration) { F.T = F.duration; ended = true; pause(); }
+      if (F.T >= F.duration) {
+        F.T = F.duration; ended = true; pause();
+        // no site, o carrossel avança para o próximo filme
+        if (IN_SITE) { try { window.parent.postMessage({ turium: 'ended' }, '*'); } catch (e) {} }
+      }
     }
     F.render();
     updateUI();
@@ -314,17 +318,44 @@
     return Promise.all(jobs);
   }
 
-  gateBtn.addEventListener('click', function () {
+  function startFromGate() {
     // o clique libera vídeos e áudio no navegador
     F.clips.forEach(function (c) { var p = c.v.play(); if (p && p.catch) p.catch(function () {}); c.v.pause(); });
     gate.classList.add('gone');
     F.seek(hashT);
     play();
+  }
+  gateBtn.addEventListener('click', function () {
+    startFromGate();
+    // avisa o carrossel do site: a partir de agora, os próximos filmes começam sozinhos
+    if (IN_SITE) { try { window.parent.postMessage({ turium: 'started' }, '*'); } catch (e) {} }
+  });
+
+  /* ---------- No site: reprodução em sequência ----------
+     O primeiro filme sempre espera o clique. Depois que o visitante deu play em um filme,
+     a página manda { turium: 'autoplay', on: true } quando este cartão chega ao centro:
+     o filme começa sozinho, com voz. Se o navegador recusar o som, a capa continua pedindo o clique. */
+  var wantAuto = false;
+  function tryAuto() {
+    if (!wantAuto || gate.classList.contains('gone') || !gate.classList.contains('ask')) return;
+    var p;
+    try { audio.currentTime = 0; p = audio.play(); } catch (e) { p = Promise.reject(e); }
+    Promise.resolve(p).then(function () {
+      if (!wantAuto) { audio.pause(); return; }
+      wantAuto = false;
+      startFromGate();
+    }, function () { wantAuto = false; /* sem permissão de som: fica a capa com o botão */ });
+  }
+  window.addEventListener('message', function (e) {
+    if (e.source !== window.parent || !e.data || e.data.turium !== 'autoplay') return;
+    wantAuto = !!e.data.on;
+    if (wantAuto) tryAuto();
   });
 
   requestAnimationFrame(frame);
   preload().then(function () {
     gate.classList.add('ask');
     if (!EMBED) gateBtn.focus();
+    tryAuto();
   });
 })();
