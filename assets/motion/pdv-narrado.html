@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Filme 4 com narração e trilha (turium_narracao_59s_pdv.mp3). Usa js/player-pdv.js. -->
+  <title>Turium — PDV Rápido</title>
+  <meta name="description" content="Turium, ERP para lojas de materiais de construção: o PDV Rápido do balcão ao comprovante não fiscal, em 59 segundos, com narração.">
+  <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/fonts/inter.css">
+  <link rel="stylesheet" href="assets/fonts/manrope.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/film.css">
+  <link rel="stylesheet" href="css/pdv.css?v=5">
+  <style>
+    /* Botão de som (mesmo estilo dos outros controles) */
+    #btn-mute .i-off { display: none; }
+    body.muted #btn-mute .i-on { display: none; }
+    body.muted #btn-mute .i-off { display: block; }
+    .gate-btn svg { width: 14px; height: 14px; margin-right: 12px; }
+
+    /* Aviso do ajuste de atraso da narração (teclas [ e ]) */
+    #sync-toast {
+      position: fixed; top: 20px; left: 50%; z-index: 30;
+      transform: translate(-50%, -8px); opacity: 0; pointer-events: none;
+      padding: 10px 16px; border: 1px solid var(--gold); border-radius: 8px;
+      background: rgba(9, 11, 14, .92); color: var(--paper);
+      font: 500 13px/1 var(--font-mono); letter-spacing: .06em; white-space: pre;
+      transition: opacity 200ms, transform 200ms;
+    }
+    #sync-toast.on { opacity: 1; transform: translate(-50%, 0); }
+
+    /* Dentro do site (iframe), o filme ocupa uma moldura menor */
+    html.embed #player { padding: 0 16px 12px; }
+    html.embed .gate-inner { gap: 28px; }
+    html.embed .gate-inner > svg { width: min(340px, 52vw); }
+    html.embed .gate-load { width: min(340px, 52vw); }
+    @media (max-width: 720px) {
+      .brand-mini, .scene-name { display: none; }
+      .ctrls { gap: 10px; }
+      .pbtn { width: 36px; height: 36px; }
+      .gate-btn { height: 48px; padding: 0 20px; font-size: 11px; letter-spacing: .16em; }
+      .gate-note { font-size: 10px; text-align: center; padding: 0 16px; line-height: 1.5; }
+    }
+    @media (max-width: 420px) {
+      .gate-note { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main id="stage" aria-label="Filme do Turium com narração: PDV Rápido, do balcão ao caixa">
+    <div class="bg-grid" aria-hidden="true"></div>
+  </main>
+
+  <audio id="narracao" preload="auto" src="turium_narracao_59s_pdv.mp3?v=1"></audio>
+  <div id="sync-toast" role="status" aria-live="polite"></div>
+
+  <div id="player" role="group" aria-label="Controles do filme">
+    <div class="track" id="track" role="slider" tabindex="0" aria-label="Posição do filme" aria-valuemin="0" aria-valuemax="59" aria-valuenow="0">
+      <div class="rail"></div>
+      <div class="fillbar" id="fillbar"></div>
+      <div class="head" id="head"></div>
+      <div class="tip" id="tip"></div>
+    </div>
+    <div class="ctrls">
+      <button class="pbtn" id="btn-play" type="button" aria-label="Reproduzir">
+        <svg class="i-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>
+        <svg class="i-pause" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5h3v11H4zM9 2.5h3v11H9z" fill="currentColor"/></svg>
+      </button>
+      <button class="pbtn" id="btn-replay" type="button" aria-label="Ver do início">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8a4.5 4.5 0 1 0 1.4-3.3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M2.5 2.5v3.5H6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+      </button>
+      <button class="pbtn" id="btn-mute" type="button" aria-label="Silenciar narração" aria-pressed="false">
+        <svg class="i-on" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6h3l4-3v10L5 10H2z" fill="currentColor"/><path d="M11 5.5a3.5 3.5 0 0 1 0 5M12.8 3.5a6.2 6.2 0 0 1 0 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        <svg class="i-off" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6h3l4-3v10L5 10H2z" fill="currentColor"/><path d="M11 6l4 4M15 6l-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </button>
+      <span class="time"><b id="t-now">00:00</b> / <span id="t-dur">00:00</span></span>
+      <span class="scene-name" id="scene-name"></span>
+      <span class="spacer"></span>
+      <span class="brand-mini"><i></i>Turium · base de demonstração</span>
+      <button class="pbtn" id="btn-full" type="button" aria-label="Tela cheia">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="gate">
+    <div class="gate-inner">
+      <svg viewBox="0 0 1052 176" role="img" aria-label="Turium"><rect x="0" y="0" width="43" height="43" fill="#F3B61F"/><rect x="66" y="0" width="39" height="176" fill="#F4F2EE"/><g transform="translate(195 41)" fill="none" stroke="#F4F2EE" stroke-width="14"><path transform="translate(7 0)" d="M0 7H95M47.5 7V100"/><path transform="translate(177 0)" d="M7 0V55A38 38 0 0 0 83 55V0"/><path transform="translate(342 0)" d="M0 7H31A23 23 0 0 1 31 53H6L51 93"/><path transform="translate(478 0)" d="M7 0V100"/><path transform="translate(567 0)" d="M7 0V55A38 38 0 0 0 83 55V0"/><path transform="translate(732 0)" d="M7 100V0L59 68L111 0V100"/></g></svg>
+      <div class="gate-load"><i id="gate-bar"></i></div>
+      <button class="gate-btn" id="gate-btn" type="button"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>Assistir com narração</button>
+      <span class="gate-note">59 s · com áudio · espaço pausa · M silencia · F tela cheia</span>
+    </div>
+  </div>
+
+  <script src="js/engine.js" defer></script>
+  <script src="js/kit.js" defer></script>
+  <script src="js/scenes-pdv.js?v=5" defer></script>
+  <script src="js/scenes-pdv-b.js?v=5" defer></script>
+  <script src="js/player-pdv.js?v=1" defer></script>
+</body>
+</html>

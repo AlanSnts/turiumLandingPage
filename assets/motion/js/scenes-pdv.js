@@ -1,6 +1,6 @@
 /* Turium — filme 4: PDV Rápido (59 s). Cenas 1–3 e peças compartilhadas.
    Tempos em segundos; render(t) recebe o tempo local da cena.
-   TELAS: só capturas reais do ambiente demo-filme4 (C01–C13). Enquanto não existirem, cada uma aparece
+   TELAS: só capturas reais do ambiente demo-filme4 (C01–C13, menos C10, que é ilustração identificada). Enquanto não existirem, cada uma aparece
    como ESPAÇO RESERVADO identificado — nenhuma tela do ERP é desenhada como se fosse captura.
    Planta da loja, leitor, impressora e ícones são ilustrações próprias. */
 (function () {
@@ -16,26 +16,67 @@
     C05: { t: 'Quantidade alterada e total recalculado', w: 'Pedro · Vendedor' },
     C06: { t: 'Código de barras no campo e produto localizado', w: 'Pedro · Vendedor' },
     C07: { t: 'Carrinho com 4 itens e total', w: 'Pedro · Vendedor' },
-    C08: { t: 'Diálogo “Enviar ao caixa?” (F8)', w: 'Pedro · Vendedor' },
-    C09: { t: 'Confirmação “… enviado ao caixa”', w: 'Pedro · Vendedor' },
-    C10: { t: 'Fila “Aguardando caixa” com o pedido', w: 'André · Caixa' },
-    C11: { t: 'Pedido aberto no caixa, antes de confirmar', w: 'André · Caixa' },
-    C12: { t: 'Venda concluída (pagamento fictício)', w: 'André · Caixa' },
-    C13: { t: 'Prévia do comprovante 80 mm “COMPROVANTE NÃO FISCAL”', w: 'André · Caixa' }
+    C08: { t: 'Carrinho no caixa com “Ir para pagamento (F8)”', w: 'Ricardo · Caixa' },
+    C09: { t: 'Venda VEN-001488 finalizada (pagamento fictício)', w: 'Ricardo · Caixa' },
+    C10: { t: 'Fila “Aguardando caixa” com o pedido', w: 'Caixa', illus: true },   // sem captura: ilustração identificada na cena 4
+    C13: { t: 'Prévia real do comprovante 80 mm (VEN-001488, a mesma venda de C09)', w: 'Ricardo · Caixa' }
   };
-  // Quando a captura existir: CAPS.C02.src = 'assets/film/pdv-c02.webp' (2560×1032).
-  function slotHTML(ref, id) {
+  // Capturas reais (2560×1080, ambiente demo-filme4). C01–C07: pedido do Pedro (vendedor).
+  // C08–C09 (versões atualizadas): caixa Ricardo, mesma compra (4 itens, R$ 124,82). C13: PDF real do
+  // comprovante dessa venda (VEN-001488). C10 é ilustração.
+  ['C01', 'C02', 'C03', 'C04', 'C05', 'C06', 'C07', 'C08', 'C09', 'C13'].forEach(function (k) { CAPS[k].src = 'assets/film/pdv-' + k.toLowerCase() + '.webp'; });
+  // Modo de revisão (?revisao=1): mostra códigos de captura, guia de locução e notas técnicas.
+  // Fora dele (versão final) nada disso aparece; sem captura, o quadro fica neutro.
+  var REV = /[?&](revisao|guia)=1/.test(location.search);
+  function slotHTML(ref, id, mouse) {
     var c = CAPS[id], inner;
     if (c.src) { F.images.push(c.src); inner = '<img src="' + c.src + '" alt="" decoding="async">'; }
+    else if (!REV) { inner = '<div class="ph0"></div>'; }
     else {
       inner = '<div class="ph"><span class="corner">Espaço reservado · ' + id + '</span>' +
         '<span class="k">Captura real pendente</span><span class="id">' + id + '</span>' +
         '<span class="t">' + c.t + '</span><span class="w">PDV Rápido · ' + c.w + ' · ambiente demo-filme4</span>' +
-        '<span class="dim">2560 × 1032</span></div>';
+        '<span class="dim">2560 × 1080</span></div>';
     }
+    if (mouse) inner += mouseHTML('m_' + ref);
     return '<div class="slot" data-r="' + ref + '">' + inner + '</div>';
   }
-  var SW = 1680, SH = 677, BOX = { x: 120, y: 152, w: 1680, h: 677 };
+  /* ---------- ponteiro do mouse animado ----------
+     Desenhado DENTRO do quadro da captura (acompanha zoom e posição). Coordenadas em pixels da captura
+     (2560 × 1080). Nas capturas que já trazem o ponteiro gravado, ele para exatamente em cima do ponteiro
+     real; nas que não trazem, vai até o botão usado. Clique = leve aperto + onda dourada. */
+  var R = 1680 / 2560;
+  function mouseHTML(ref) {
+    return '<div class="mouse" data-r="' + ref + '"><i class="rip"></i>' +
+      '<svg viewBox="0 0 22 32" aria-hidden="true"><path d="M1.5 1.5 V25.5 L7.6 19.9 L11.9 29.6 L16.3 27.7 L12.1 18.2 H20.3 Z" fill="#14181D" stroke="#FFFFFF" stroke-width="2.2" stroke-linejoin="round"/></svg></div>';
+  }
+  // keys: [[t, x, y], ...] (tempo local, px da captura); clicks: [t, ...]
+  function mouse(el, t, keys, clicks, a) {
+    if (!el) return;
+    var x = keys[0][1], y = keys[0][2];
+    for (var i = 0; i < keys.length; i++) {
+      if (t >= keys[i][0]) { x = keys[i][1]; y = keys[i][2]; }
+      if (i + 1 < keys.length && t >= keys[i][0] && t < keys[i + 1][0]) {
+        var k = E.inOut(F.p(t, keys[i][0], keys[i + 1][0]));
+        x = F.lerp(keys[i][1], keys[i + 1][1], k); y = F.lerp(keys[i][2], keys[i + 1][2], k);
+        // arco suave no caminho
+        y -= Math.sin(k * Math.PI) * Math.min(60, Math.abs(keys[i + 1][1] - keys[i][1]) * .06);
+        break;
+      }
+    }
+    var press = 0, rip = -1;
+    (clicks || []).forEach(function (c) {
+      if (t >= c - .08 && t < c + .16) press = Math.sin(F.p(t, c - .08, c + .16) * Math.PI);
+      if (t >= c && t < c + .55) rip = F.p(t, c, c + .55);
+    });
+    F.tf(el, 'translate3d(' + (x * R).toFixed(1) + 'px,' + (y * R).toFixed(1) + 'px,0) scale(' + (1 - .14 * press).toFixed(3) + ')');
+    F.op(el, a === undefined ? 1 : a);
+    var r = el.firstChild;
+    F.op(r, rip < 0 ? 0 : (1 - rip) * .9);
+    F.tf(r, 'translate(-50%,-50%) scale(' + (rip < 0 ? .2 : .2 + 1.3 * E.out(rip)).toFixed(3) + ')');
+  }
+
+  var SW = 1680, SH = 709, BOX = { x: 120, y: 140, w: 1680, h: 709 };   // capturas 2560×1080
   // posiciona um espaço de captura pelo retângulo (x, y, largura) do palco
   function slotAt(el, x, y, w, a, extra) {
     F.tf(el, 'translate3d(' + x.toFixed(2) + 'px,' + y.toFixed(2) + 'px,0) scale(' + (w / SW).toFixed(5) + ')' + (extra || ''));
@@ -64,20 +105,21 @@
   }
 
   /* ---------- guia de locução (prévia) ---------- */
-  var GUIA = /[?&]guia=1/.test(location.search);
+  var GUIA = REV;
+  // janelas reais das falas, medidas na voz posicionada (turium_narracao_59s_pdv.wav, ver tools/mix_pdv.py)
   var FALAS = [
-    [0.8, 4.6, 'Seu cliente não precisa carregar tudo até o balcão para fazer uma compra.'],
-    [5.0, 8.4, 'E sua loja não pode perder tempo procurando cada produto.'],
-    [9.6, 16.8, 'No PDV Rápido do Turium, você busca o produto pelo nome ou código, informa a quantidade e adiciona direto à compra.'],
-    [20.4, 26.4, 'E, quando o produto está no balcão, um leitor de código de barras compatível agiliza o registro.'],
-    [30.6, 34.2, 'O vendedor monta o pedido e envia para o caixa.'],
-    [34.6, 38.8, 'Tudo organizado para o responsável concluir o pagamento.'],
-    [41.6, 45.2, 'Finalize a venda e imprima o comprovante não fiscal.'],
-    [45.8, 51.2, 'A emissão de NF-e e NFC-e virá como módulo fiscal opcional, nos planos Pro e Enterprise.'],
-    [52.6, 58.4, 'Mais agilidade para a equipe. Mais praticidade para o cliente. Turium: seu balcão preparado para vender.']
+    [0.65, 4.91, 'Seu cliente não precisa carregar tudo até o balcão para fazer uma compra.'],
+    [5.25, 8.95, 'E sua loja não pode perder tempo procurando cada produto.'],
+    [9.95, 18.31, 'No PDV Rápido do Turium, você busca o produto pelo nome ou código, informa a quantidade e adiciona direto à compra.'],
+    [20.45, 26.02, 'E, quando o produto está no balcão, um leitor de código de barras compatível agiliza o registro.'],
+    [30.65, 33.41, 'O vendedor monta o pedido e envia para o caixa.'],
+    [35.35, 38.52, 'Tudo organizado para o responsável concluir o pagamento.'],
+    [40.45, 43.70, 'Finalize a venda e imprima o comprovante não fiscal.'],
+    [44.40, 51.23, 'A emissão de NF-e e NFC-e virá como módulo fiscal opcional, nos planos Pro e Enterprise.'],
+    [51.75, 58.53, 'Mais agilidade para a equipe. Mais praticidade para o cliente. Turium: seu balcão preparado para vender.']
   ];
 
-  F.p4 = { CAPS: CAPS, slotHTML: slotHTML, slotAt: slotAt, slotFull: slotFull, BOX: BOX, SW: SW, SH: SH, icon: icon, FALAS: FALAS, GUIA: GUIA };
+  F.p4 = { REV: REV, CAPS: CAPS, mouse: mouse, R: R, slotHTML: slotHTML, slotAt: slotAt, slotFull: slotFull, BOX: BOX, SW: SW, SH: SH, icon: icon, FALAS: FALAS, GUIA: GUIA };
 
   /* ======================================================================
      1 · O PROBLEMA (0 – 9)
@@ -153,7 +195,7 @@
       s += '<rect x="' + (ms[0] - 6) + '" y="' + (MON.y + MON.h) + '" width="12" height="' + (ms[1] - MON.y - MON.h) + '" fill="#2B3139"/>';
       s += '<rect x="' + (MON.x - 7) + '" y="' + (MON.y - 7) + '" width="' + (MON.w + 14) + '" height="' + (MON.h + 14) + '" rx="5" fill="#1B2027" stroke="#3A414A" stroke-width="2"/>';
       s += '<rect data-r="scr" x="' + MON.x + '" y="' + MON.y + '" width="' + MON.w + '" height="' + MON.h + '" fill="#0D1114" stroke="rgba(243,182,31,.55)" stroke-width="1.5" stroke-dasharray="4 3"/>';
-      s += '<text x="' + (MON.x + MON.w / 2) + '" y="' + (MON.y + MON.h / 2 + 6) + '" text-anchor="middle" fill="#D7DBDF" style="font:800 18px var(--font-display)">C01</text>';
+      if (REV) s += '<text x="' + (MON.x + MON.w / 2) + '" y="' + (MON.y + MON.h / 2 + 6) + '" text-anchor="middle" fill="#D7DBDF" style="font:800 18px var(--font-display)">C01</text>';
       // pessoas (silhuetas simples): vendedor atrás do balcão, cliente na frente
       function person(x, y, col) {
         var p = iso(x, y, 0);
@@ -211,14 +253,14 @@
     name: 'Encontre e adicione', start: 9.0, dur: 11.0,
     build: function (el) {
       var h = '';
-      S2.forEach(function (s) { h += slotHTML(s[0], s[1]); });
+      S2.forEach(function (s) { h += slotHTML(s[0], s[1], true); });
       h += '<div class="who" data-r="who"><i></i>PDV Rápido · Pedro · Vendedor</div>';
       h += '<div class="key" data-r="f3">F3</div>';
       h += '<div class="qry" data-r="q"><small>Busca</small><b data-r="qt"></b><span class="caret" data-r="qc"></span></div>';
       h += '<div class="flyer" data-r="fl1">' + icon('plus', 2.4) + 'Cimento CP-II 50 kg</div>';
       h += '<div class="flyer" data-r="fl2">' + icon('plus', 2.4) + 'Tubo PVC</div>';
       h += '<div class="note4" data-r="n1">→ Sua venda</div>';
-      h += '<div class="note4" data-r="n2">Quantidade e total · valores da captura real</div>';
+      h += '<div class="note4" data-r="n2"' + (REV ? '' : ' style="display:none"') + '>Quantidade e total · valores da captura real</div>';
       h += '<div class="cap" style="left:160px;top:930px"><div class="ln" data-r="w1" style="display:inline-block"><span>BUSQUE.</span></div> ' +
         '<div class="ln" data-r="w2" style="display:inline-block"><span>SELECIONE.</span></div> ' +
         '<div class="ln" data-r="w3" style="display:inline-block"><span class="gold">ADICIONE.</span></div></div>';
@@ -240,17 +282,24 @@
           slotAt(el, cx - w / 2, cy - h / 2, w, 1);
         } else slotFull(el, on ? a : 0, .035, k);
       });
+      // mouse: cada captura já traz o ponteiro real gravado (C02 busca, C04 Adicionar do cimento, C03, C05 botão +).
+      // O ponteiro animado repousa exatamente sobre ele e só viaja durante a troca de tela.
+      var BUS = [681, 130], CIM = [341, 424], C3 = [282, 388], MAIS = [2349, 209];
+      mouse(c.m_s2a, t, [[0, BUS[0], BUS[1]], [3.75, BUS[0], BUS[1]], [4.15, CIM[0], CIM[1]]], []);
+      mouse(c.m_s2b, t, [[3.75, BUS[0], BUS[1]], [4.15, CIM[0], CIM[1]], [5.95, CIM[0], CIM[1]], [6.35, C3[0], C3[1]]], [4.25]);
+      mouse(c.m_s2c, t, [[5.95, CIM[0], CIM[1]], [6.35, C3[0], C3[1]], [8.15, C3[0], C3[1]], [8.55, MAIS[0], MAIS[1]]], []);
+      mouse(c.m_s2d, t, [[8.15, C3[0], C3[1]], [8.55, MAIS[0], MAIS[1]]], [8.95]);
       place(c.who, 120, 100, E.out(F.p(t, .7, 1.1)), false);
       // F3 e a digitação
       var kf = F.inout(t, .9, .3, 3.4, .3);
       F.tf(c.f3, 'translateY(' + ((1 - kf) * 16 + (t > 1.0 && t < 1.18 ? 6 : 0)).toFixed(1) + 'px)');
-      F.css(c.f3, 'left', '1520px'); F.css(c.f3, 'top', '700px');
+      F.css(c.f3, 'left', '1280px'); F.css(c.f3, 'top', '470px');
       F.op(c.f3, kf); F.vis(c.f3, kf > .002);
       c.f3.classList.toggle('on', t > 1.0 && t < 3.4);
-      var word = 'Cimento CP-II', n = Math.round(word.length * F.p(t, 1.4, 2.6));
+      var word = 'Cimento', n = Math.round(word.length * F.p(t, 1.4, 2.6));
       F.txt(c.qt, word.slice(0, n));
       var kq = F.inout(t, 1.2, .35, 3.6, .3);
-      place(c.q, 1000, 708, kq, false);
+      place(c.q, 640, 560, kq, false);
       F.op(c.qc, (Math.floor(t * 2.4) % 2) ? 1 : .15);
       // o item "voa" para Sua venda (arco de 0,5 s)
       function fly(el, a, x0, y0, x1, y1) {
@@ -259,9 +308,9 @@
         F.tf(el, 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0) scale(' + (1 - .25 * p).toFixed(3) + ')');
         F.op(el, al); F.vis(el, al > .002);
       }
-      fly(c.fl1, 3.4, 640, 470, 1430, 300);
-      fly(c.fl2, 6.9, 640, 470, 1430, 330);
-      place(c.n1, 1460, 250, F.inout(t, 3.6, .3, 4.6, .3), false);
+      fly(c.fl1, 4.25, 344, 418, 1330, 250);
+      fly(c.fl2, 6.9, 560, 560, 1330, 300);
+      place(c.n1, 1250, 330, F.inout(t, 4.45, .3, 5.6, .3), false);
       place(c.n2, 160, 856, F.inout(t, 8.7, .4, 10.5, .3), false);
       F.line(c.w1, t, 1.2, 10.4, .7, .45);
       F.line(c.w2, t, 2.8, 10.45, .7, .45);
@@ -301,7 +350,7 @@
     name: 'Leitor de código de barras', start: 20.0, dur: 10.0,
     build: function (el) {
       var h = '<div class="fill" data-r="L">' + scannerSVG() + '<div class="illus" style="right:64px;top:40px">Ilustração · leitor de código de barras compatível</div></div>';
-      h += slotHTML('c6', 'C06') + slotHTML('c7', 'C07');
+      h += slotHTML('c6', 'C06', true) + slotHTML('c7', 'C07', true);
       h += '<div class="who" data-r="who"><i></i>PDV Rápido · Pedro · Vendedor</div>';
       h += '<div class="flyer" data-r="fl">' + icon('plus', 2.4) + 'Conexão</div>';
       h += H.cap('c1', 'DIGITE <span class="muted">OU</span> <span class="gold">ESCANEIE.</span>', 160, 930);
@@ -330,6 +379,9 @@
         var el = cur[2] === 'C06' ? c.c6 : c.c7;
         slotFull(el, 1, .03, F.p(t, cur[0], cur[1]));
       }
+      // mouse parado sobre o ponteiro real gravado (C06: campo de busca; C07: Adicionar da chave de fenda)
+      mouse(c.m_c6, t, [[0, 651, 128]], []);
+      mouse(c.m_c7, t, [[0, 860, 423]], [7.9]);
       place(c.who, 120, 100, isL ? 0 : 1, false);
       // item escaneado cai no carrinho com um leve salto
       var drop = (t >= 4.8 && t < 5.8) ? 4.85 : (t >= 7.4 && t < 8.4 ? 7.45 : null);

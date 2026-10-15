@@ -34,6 +34,12 @@ window.TURIUM_VIDEOS = [
     title: 'Enxergue onde está perdendo',
     meta: 'Filme com narração · 59 s'
   },
+  {
+    type: 'embed',
+    src: 'assets/motion/pdv-narrado.html?embed=1&v=3',
+    title: 'PDV Rápido: do balcão ao caixa',
+    meta: 'Filme com narração · 59 s'
+  },
   { type: 'placeholder', title: 'Recebimento de mercadoria', meta: 'Em breve' },
   { type: 'placeholder', title: 'Fluxo de caixa sem planilha', meta: 'Em breve' }
 ];
