@@ -35,7 +35,7 @@
  * @property {string} name
  * @property {string} tagline            Frase de destaque do cartão.
  * @property {string} description        Para quem é o plano.
- * @property {{ amount: string, currency: string }} price
+ * @property {{ amount: string, currency: string, was?: string }} price  was = preço anterior (ancoragem: "De R$ was por R$ amount")
  * @property {'one-time'|'monthly'} billingPeriod
  * @property {string} billingLabel        Texto exibido ao lado do preço.
  * @property {{ count: number|null, label: string, note?: string }} deviceLimit  count null = sem limite comercial
@@ -44,7 +44,7 @@
  * @property {PlanFeature[]} primaryFeatures  Até 5, mostrados no cartão compacto.
  * @property {FeatureGroup[]} featureGroups   Lista completa, por categoria.
  * @property {string[]} optionalModules       Módulos vendidos à parte.
- * @property {{ label: string, href: string }} callToAction
+ * @property {{ label: string, href: string }} callToAction  href = link do Mercado Pago (CHECKOUT) ou, sem link, a seção de contato
  * @property {'available'} availabilityStatus Situação comercial do plano.
  * @property {string} [scopeNote]         Aviso de escopo exibido no cartão.
  */
@@ -52,6 +52,20 @@
 (function () {
   'use strict';
   var I = 'included', N = 'unavailable', O = 'optional', SOON = 'soon', DEV = 'dev';
+
+  /* Links de pagamento do Mercado Pago (páginas de checkout hospedadas pelo próprio Mercado Pago).
+     Gere com tools/mercadopago/criar-links.mjs e cole aqui. São links públicos: NUNCA coloque
+     o Access Token neste arquivo nem em nenhum outro arquivo do site.
+       basico     → Checkout Pro, pagamento único
+       pro        → assinatura mensal (plano de assinatura)
+       enterprise → assinatura mensal (plano de assinatura)
+     Vazio = o botão continua levando à seção #comecar. */
+  var CHECKOUT = {
+    basico: '',
+    pro: '',
+    enterprise: ''
+  };
+  function cta(id, label) { return { label: label, href: CHECKOUT[id] || '#comecar', checkout: !!CHECKOUT[id] }; }
 
   /* Matriz única: cada linha traz o status em [Básico, Pro, Enterprise].
      Os grupos seguem as categorias pedidas para o estado expandido. */
@@ -119,7 +133,7 @@
       name: 'Turium Básico',
       tagline: 'Um computador. Controle completo da operação essencial.',
       description: 'Para pequenos comerciantes que precisam vender, organizar o estoque e acompanhar o negócio sem mensalidades.',
-      price: { amount: '200', currency: 'R$' },
+      price: { amount: '199,90', currency: 'R$', was: '350' },
       billingPeriod: 'one-time',
       billingLabel: 'pagamento único',
       deviceLimit: { count: 1, label: '1 computador autorizado' },
@@ -132,7 +146,7 @@
       ],
       featureGroups: groupsFor(0),
       optionalModules: [],
-      callToAction: { label: 'Comprar licença', href: '#comecar' },
+      callToAction: cta('basico', 'Comprar licença'),
       availabilityStatus: 'available',
       scopeNote: 'Licença permanente desta edição para 1 computador. Inclui só os recursos do Básico, sem NF-e/NFC-e nem rede entre computadores.'
     },
@@ -141,7 +155,7 @@
       name: 'Turium Pro',
       tagline: 'Mais computadores. Mais controle. Mais produtividade.',
       description: 'Para lojas em crescimento que precisam conectar setores, acompanhar resultados e administrar equipes com eficiência.',
-      price: { amount: '450', currency: 'R$' },
+      price: { amount: '450', currency: 'R$', was: '670' },
       billingPeriod: 'monthly',
       billingLabel: '/mês',
       deviceLimit: { count: 3, label: 'Até 3 computadores autorizados' },
@@ -155,7 +169,7 @@
       ],
       featureGroups: groupsFor(1),
       optionalModules: ['NF-e / NFC-e (em breve)', 'Turium Owner remoto (em breve)'],
-      callToAction: { label: 'Assinar Turium Pro', href: '#comecar' },
+      callToAction: cta('pro', 'Assinar Turium Pro'),
       availabilityStatus: 'available'
     },
     {
@@ -163,7 +177,7 @@
       name: 'Turium Enterprise',
       tagline: 'Sua operação sem limites comerciais de computadores.',
       description: 'Para empresas com operações maiores que precisam de infraestrutura escalável, automação e recursos avançados de gestão.',
-      price: { amount: '1.000', currency: 'R$' },
+      price: { amount: '999', currency: 'R$', was: '1.800' },
       billingPeriod: 'monthly',
       billingLabel: '/mês',
       deviceLimit: { count: null, label: 'Computadores ilimitados', note: 'Sem limite comercial; o uso simultâneo depende da infraestrutura.' },
@@ -176,7 +190,7 @@
       ],
       featureGroups: groupsFor(2),
       optionalModules: ['NF-e / NFC-e (em breve)'],
-      callToAction: { label: 'Contratar Enterprise', href: '#comecar' },
+      callToAction: cta('enterprise', 'Contratar Enterprise'),
       availabilityStatus: 'available'
     }
   ];
@@ -188,10 +202,11 @@
     'Enterprise: sem limite comercial de computadores; a capacidade simultânea depende da infraestrutura contratada.',
     'O núcleo operacional do Turium funciona sem conexão permanente à internet.',
     'O módulo fiscal é exclusivo do Pro e do Enterprise, mediante contratação adicional, quando disponibilizado.',
-    'Recursos marcados como “Em breve” ou “Em desenvolvimento” não fazem parte da entrega imediata.'
+    'Recursos marcados como “Em breve” ou “Em desenvolvimento” não fazem parte da entrega imediata.',
+    'Pagamento processado pelo Mercado Pago. Pro e Enterprise são assinaturas mensais com cobrança automática.'
   ];
 
-  var api = { PLANS: PLANS, NOTES: NOTES };
+  var api = { PLANS: PLANS, NOTES: NOTES, CHECKOUT: CHECKOUT };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;   // usado pelos testes (Node)
   if (typeof window !== 'undefined') window.TURIUM_PLANS = api;
 })();

@@ -1,0 +1,153 @@
+/* Turium — filme 4 (PDV Rápido): peças próprias. Usa css/tokens.css e as bases de css/film.css. */
+
+.fx { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; pointer-events: none; overflow: visible; }
+
+/* ---------- espaço reservado de captura (substituído pela captura real 2560×1032) ---------- */
+.slot {
+  position: absolute; left: 0; top: 0;
+  width: 1680px; height: 677px;                 /* 2560×1032 na escala do quadro */
+  transform-origin: 0 0; will-change: transform, opacity;
+  border-radius: 16px; overflow: hidden;
+  background: #0D1114;
+  box-shadow: 0 0 0 2px rgba(244, 242, 238, .08), 0 60px 160px -40px rgba(0, 0, 0, .9);
+}
+.slot img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.slot .ph {
+  position: absolute; inset: 0;
+  border: 3px dashed rgba(243, 182, 31, .55); border-radius: 16px;
+  background:
+    repeating-linear-gradient(135deg, rgba(244, 242, 238, .035) 0 2px, transparent 2px 26px),
+    radial-gradient(ellipse 70% 80% at 50% 45%, #141920, #0B0E11);
+  display: grid; align-content: center; justify-items: center; gap: 22px; text-align: center;
+}
+.slot .ph .k { font: 600 22px/1 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--gold); }
+.slot .ph .id { font: 800 150px/1 var(--font-display); letter-spacing: -0.04em; color: rgba(244, 242, 238, .92); }
+.slot .ph .t { max-width: 1240px; font: 600 40px/1.2 var(--font-display); letter-spacing: -0.015em; color: #D7DBDF; }
+.slot .ph .w { font: 500 22px/1 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: #858E98; }
+.slot .ph .dim { position: absolute; right: 26px; bottom: 22px; font: 500 18px/1 var(--font-mono); letter-spacing: .12em; color: #5E6670; }
+.slot .ph .corner { position: absolute; left: 26px; top: 22px; font: 500 18px/1 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: #5E6670; }
+
+/* quem está na tela */
+.who {
+  position: absolute; display: inline-flex; align-items: center; gap: 12px; white-space: nowrap;
+  padding: 11px 16px; border-radius: 10px; background: rgba(9, 11, 14, .9); border: 1.5px solid #2F363F;
+  font: 600 18px/1 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: #D7DBDF;
+}
+.who i { width: 10px; height: 10px; background: var(--gold); }
+
+/* tecla e consulta digitada: anotações do filme, nunca imitação da interface */
+.key {
+  position: absolute; min-width: 92px; height: 92px; padding: 0 22px;
+  display: grid; place-items: center;
+  border-radius: 16px; background: #1B2027; border: 2px solid #3A414A;
+  box-shadow: 0 8px 0 #0F1317, 0 30px 60px -20px rgba(0, 0, 0, .9);
+  font: 700 40px/1 var(--font-display); letter-spacing: -0.01em; color: var(--paper);
+  will-change: transform, opacity;
+}
+.key.on { border-color: var(--gold); color: var(--gold); }
+.qry {
+  position: absolute; display: inline-flex; align-items: center; gap: 16px; white-space: nowrap;
+  padding: 18px 24px; border-radius: 14px; background: rgba(9, 11, 14, .92); border: 2px solid rgba(243, 182, 31, .7);
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, .95);
+}
+.qry small { font: 600 17px/1 var(--font-mono); letter-spacing: .16em; text-transform: uppercase; color: #858E98; }
+.qry b { font: 700 40px/1 var(--font-display); letter-spacing: -0.02em; color: var(--paper); }
+.qry .caret { width: 3px; height: 40px; background: var(--gold); }
+.flyer {
+  position: absolute; display: inline-flex; align-items: center; gap: 12px; white-space: nowrap;
+  padding: 14px 20px; border-radius: 12px; background: var(--gold); color: var(--ink);
+  font: 700 26px/1 var(--font-display); letter-spacing: -0.01em;
+  box-shadow: 0 20px 50px -16px rgba(243, 182, 31, .55);
+  will-change: transform, opacity;
+}
+.flyer svg { width: 26px; height: 26px; }
+
+/* anotação técnica (o que a captura vai provar) */
+.note4 {
+  position: absolute; white-space: nowrap;
+  font: 500 18px/1.3 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: #858E98;
+}
+.illus {
+  position: absolute; z-index: 6;
+  font: 600 16px/1 var(--font-mono); letter-spacing: .16em; text-transform: uppercase; color: #AAB1B9;
+  padding: 10px 14px; border: 1.5px dashed #4A525C; border-radius: 8px; background: rgba(9, 11, 14, .78); white-space: nowrap;
+}
+
+/* rótulos da planta da loja */
+.pt-lbl {
+  position: absolute; white-space: nowrap; transform: translate(-50%, -100%);
+  font: 600 17px/1 var(--font-mono); letter-spacing: .16em; text-transform: uppercase; color: var(--gold);
+  padding: 9px 12px; border-radius: 8px; background: rgba(9, 11, 14, .88); border: 1.5px solid rgba(243, 182, 31, .55);
+}
+
+/* cartão do pedido que corre até o caixa */
+.order {
+  position: absolute; width: 380px; padding: 22px 24px; border-radius: 16px;
+  background: #1B1708; border: 2px solid var(--gold);
+  box-shadow: 0 0 0 6px rgba(243, 182, 31, .12), 0 40px 100px -30px rgba(0, 0, 0, .95);
+  will-change: transform, opacity;
+}
+.order .k { font: 600 16px/1 var(--font-mono); letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+.order h5 { margin: 12px 0 0; font: 700 34px/1.1 var(--font-display); letter-spacing: -0.02em; color: var(--paper); }
+.order p { margin: 10px 0 0; font: 500 17px/1.3 var(--font-mono); letter-spacing: .06em; color: #AAB1B9; }
+.order .bars { display: grid; gap: 8px; margin-top: 16px; }
+.order .bars i { display: block; height: 10px; border-radius: 5px; background: rgba(243, 182, 31, .28); }
+
+/* comprovante e futuro fiscal */
+.paper {
+  position: absolute; width: 340px; overflow: hidden; transform-origin: 50% 0;
+  background: #F4F2EE; border-radius: 0 0 6px 6px;
+  box-shadow: 0 30px 70px -20px rgba(0, 0, 0, .8);
+}
+.paper .ph2 {
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(135deg, rgba(9, 11, 14, .06) 0 2px, transparent 2px 18px);
+  border: 3px dashed rgba(216, 157, 14, .8);
+  display: grid; align-content: center; justify-items: center; gap: 14px; text-align: center; padding: 30px;
+  color: #3A414A;
+}
+.paper .ph2 .k { font: 700 18px/1.2 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: #8A5E00; }
+.paper .ph2 .id { font: 800 72px/1 var(--font-display); letter-spacing: -0.04em; color: #14181D; }
+.paper .ph2 .t { font: 600 22px/1.25 var(--font-display); color: #2B3139; }
+.stamp {
+  position: absolute; white-space: nowrap; transform-origin: 50% 50%;
+  padding: 18px 30px; border: 6px solid #D65353; border-radius: 14px; color: #D65353;
+  font: 800 58px/1 var(--font-display); letter-spacing: .02em; background: rgba(9, 11, 14, .9);
+  will-change: transform, opacity;
+}
+.stamp small { display: block; margin-top: 10px; font: 700 20px/1 var(--font-mono); letter-spacing: .18em; color: #E58A8A; text-align: center; }
+.divider { position: absolute; width: 3px; background: #3A414A; transform-origin: 50% 0; }
+.futdoc {
+  position: absolute; width: 400px; height: 520px; border-radius: 14px;
+  border: 3px dashed #5E6670; background: rgba(244, 242, 238, .02);
+}
+.futdoc i { position: absolute; left: 40px; height: 14px; border-radius: 7px; border: 2px dashed #3A414A; }
+.fut-k { position: absolute; white-space: nowrap; font: 700 46px/1.05 var(--font-display); letter-spacing: -0.02em; color: #D7DBDF; }
+.fut-s { position: absolute; white-space: nowrap; font: 600 24px/1.4 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: #AAB1B9; }
+.fut-badge {
+  position: absolute; display: inline-flex; align-items: center; gap: 12px; white-space: nowrap;
+  padding: 12px 18px; border-radius: 10px; border: 2px dashed #858E98; background: rgba(9, 11, 14, .9);
+  font: 700 20px/1 var(--font-mono); letter-spacing: .16em; text-transform: uppercase; color: #D7DBDF;
+}
+.fut-badge i { width: 12px; height: 12px; border-radius: 50%; border: 2px solid #D7DBDF; }
+
+/* encerramento */
+.node4 { position: absolute; width: 220px; transform: translate(-50%, -50%); text-align: center; will-change: transform, opacity; }
+.node4 .ic { width: 112px; height: 112px; margin: 0 auto; display: grid; place-items: center; border-radius: 24px; background: #14181D; border: 2px solid rgba(243, 182, 31, .65); color: var(--gold); }
+.node4 .ic svg { width: 56px; height: 56px; }
+.node4 b { display: block; margin-top: 16px; font: 600 18px/1 var(--font-mono); letter-spacing: .16em; text-transform: uppercase; color: #D7DBDF; }
+.slogan { position: absolute; left: 0; width: 1920px; text-align: center; font: 700 56px/1.1 var(--font-display); letter-spacing: -0.03em; white-space: nowrap; }
+.sig { position: absolute; left: 0; width: 1920px; text-align: center; font: 600 24px/1 var(--font-mono); letter-spacing: .5em; text-transform: uppercase; color: var(--gold); }
+
+/* guia de locução (só na prévia: ?guia=1) */
+.guia {
+  position: absolute; left: 50%; top: 12px; transform: translateX(-50%); z-index: 20;
+  width: max-content; max-width: 1780px; padding: 9px 18px; border-radius: 10px;
+  background: rgba(9, 11, 14, .86); border: 1.5px solid #3A414A;
+  font: 500 21px/1.25 var(--font-body); color: #D7DBDF; text-align: center;
+}
+.guia b { display: inline; margin-right: 14px; font: 600 14px/1 var(--font-mono); letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+.wm {
+  position: absolute; right: 26px; bottom: 22px; z-index: 20;
+  font: 600 15px/1 var(--font-mono); letter-spacing: .16em; text-transform: uppercase; color: rgba(244, 242, 238, .45);
+}

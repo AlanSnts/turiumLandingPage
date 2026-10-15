@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Página de retorno do Mercado Pago (back_url / back_urls criados por tools/mercadopago/criar-links.mjs).
+       Só informa; quem confirma o pagamento é o Mercado Pago (comprovante por e-mail e painel da conta). -->
+  <title>Turium — Obrigado</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#090B0E">
+  <link rel="icon" href="assets/motion/assets/brand/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/motion/assets/fonts/inter.css">
+  <link rel="stylesheet" href="assets/motion/assets/fonts/manrope.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .thanks { min-height: 100vh; display: grid; place-items: center; padding: 48px var(--gutter); text-align: center; }
+    .thanks-card { max-width: 560px; }
+    .thanks-card img { width: 180px; height: auto; margin: 0 auto 40px; display: block; }
+    .thanks-card h1 { margin-top: 18px; font-family: var(--font-display); font-size: clamp(30px, 5vw, 42px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
+    .thanks-card p { margin-top: 16px; font-size: 16px; line-height: 1.6; color: var(--muted); }
+    .thanks-card .btn { margin-top: 32px; }
+  </style>
+</head>
+<body>
+  <main class="thanks">
+    <div class="thanks-card">
+      <img src="assets/motion/assets/brand/turium-logo.svg" alt="Turium" width="1052" height="176">
+      <span class="eyebrow" id="t-plan">Turium</span>
+      <h1 id="t-title">Obrigado pela sua compra.</h1>
+      <p id="t-text">O Mercado Pago envia o comprovante para o e-mail usado no pagamento. Guarde-o: ele confirma a sua contratação do Turium.</p>
+      <a class="btn btn-gold" href="index.html">Voltar ao site</a>
+    </div>
+  </main>
+  <script>
+    (function () {
+      var q = new URLSearchParams(location.search);
+      var NOMES = { basico: 'Turium Básico', pro: 'Turium Pro', enterprise: 'Turium Enterprise' };
+      var plano = NOMES[q.get('plano')];
+      if (plano) document.getElementById('t-plan').textContent = plano;
+      var assinatura = q.get('plano') === 'pro' || q.get('plano') === 'enterprise';
+      var pendente = q.get('status') === 'pendente' || q.get('collection_status') === 'pending';
+      if (pendente) {
+        document.getElementById('t-title').textContent = 'Pagamento em processamento.';
+        document.getElementById('t-text').textContent = 'O Mercado Pago ainda está confirmando o pagamento. Você recebe um e-mail assim que ele for aprovado.';
+      } else if (assinatura) {
+        document.getElementById('t-title').textContent = 'Assinatura recebida.';
+        document.getElementById('t-text').textContent = 'O Mercado Pago envia a confirmação da assinatura para o seu e-mail. A cobrança é mensal e automática; você acompanha e gerencia a assinatura pela sua conta do Mercado Pago.';
+      }
+    })();
+  </script>
+</body>
+</html>

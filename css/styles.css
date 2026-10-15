@@ -869,11 +869,11 @@ html.reel-zoom .reel-track, html.reel-zoom .reel-slot, .reel-card.is-zoomed {
 .plans-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: stretch; margin-top: 64px; }
 @media (max-width: 1023px) { .plans-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .plans-grid .plan:last-child { grid-column: 1 / -1; max-width: calc(50% - 10px); justify-self: center; width: 100%; } }
 @media (max-width: 719px) { .plans-grid { grid-template-columns: 1fr; gap: 16px; } .plans-grid .plan:last-child { max-width: none; } }
-/* desktop: as 8 faixas de cada cartão (nome, frase, preço, computadores, nota, descrição, botão, recursos) ficam alinhadas entre os três */
+/* desktop: as 9 faixas de cada cartão (nome, frase, preço anterior, preço, computadores, nota, descrição, botão, recursos) ficam alinhadas entre os três */
 @media (min-width: 1024px) {
   @supports (grid-template-rows: subgrid) {
-    .plans-grid { grid-template-rows: repeat(8, auto); row-gap: 0; }
-    .plans-grid .plan { display: grid; grid-row: span 8; grid-template-rows: subgrid; }
+    .plans-grid { grid-template-rows: repeat(9, auto); row-gap: 0; }
+    .plans-grid .plan { display: grid; grid-row: span 9; grid-template-rows: subgrid; }
   }
 }
 
@@ -897,6 +897,12 @@ html.reel-zoom .reel-track, html.reel-zoom .reel-slot, .reel-card.is-zoomed {
 .plan-price .cur { font-size: 18px; font-weight: 600; color: var(--muted); }
 .plan-price .amt { font-family: var(--font-display); font-size: clamp(40px, 4vw, 48px); font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
 .plan-price .per { font-size: 14px; color: var(--concrete); }
+.plan-anchor { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 8px; margin-top: 20px; font-size: 14px; color: var(--concrete); }
+.plan-anchor s { text-decoration-thickness: 1.5px; text-decoration-color: rgba(170,177,185,.75); }
+.plan-save { padding: 2px 8px; border-radius: 999px; border: 1px solid rgba(243,182,31,.5); background: rgba(243,182,31,.12); color: var(--gold); font-size: 11.5px; font-weight: 700; letter-spacing: .02em; }
+.plan-price.has-anchor { margin-top: 4px; }
+.plan-price .por { font-size: 14px; color: var(--muted); }
+.plan-price .amt .dec { font-size: .5em; letter-spacing: -0.02em; }
 .plan-price .per-once { padding: 3px 8px; border-radius: 6px; border: 1px solid var(--line); font-size: 12px; font-weight: 600; color: var(--muted); align-self: center; }
 .plan-devices { display: flex; align-items: center; gap: 8px; margin-top: 16px; font-size: 14px; font-weight: 600; }
 .plan-devices svg { width: 16px; height: 16px; color: var(--gold); flex-shrink: 0; }

@@ -45,6 +45,25 @@
       '<span class="f-label"><span class="sr-only">' + sr + ': </span>' + esc(f.label) + '</span>' + value + tags + '</li>';
   }
 
+  /* "1.800" / "199,90" (pt-BR) → número */
+  function num(s) { return parseFloat(String(s).replace(/\./g, '').replace(',', '.')); }
+
+  /* Ancoragem: "De R$ 1.800/mês" riscado + economia em %, acima do preço atual. */
+  function anchorHTML(p) {
+    /* sempre presente (vazio sem ancoragem) para manter as 9 linhas alinhadas entre os cartões */
+    if (!p.price.was) return '<p class="plan-anchor" aria-hidden="true"></p>';
+    var off = Math.round((1 - num(p.price.amount) / num(p.price.was)) * 100);
+    var per = p.billingPeriod === 'monthly' ? esc(p.billingLabel) : '';
+    return '<p class="plan-anchor"><span>De</span> <s><span class="sr-only">preço anterior: </span>' + esc(p.price.currency) + ' ' + esc(p.price.was) + per + '</s>' +
+      (off > 0 ? '<span class="plan-save">' + off + '% off</span>' : '') + '</p>';
+  }
+
+  /* "199,90" → "199" + ",90" menor */
+  function amountHTML(a) {
+    var i = String(a).indexOf(',');
+    return i < 0 ? esc(a) : esc(a.slice(0, i)) + '<span class="dec">' + esc(a.slice(i)) + '</span>';
+  }
+
   function cardHTML(p) {
     var panelId = 'plan-' + p.id + '-all';
     var titleId = 'plan-' + p.id + '-title';
@@ -56,13 +75,18 @@
         (p.badge ? '<span class="plan-badge">' + esc(p.badge) + '</span>' : '') +
         '<h3 class="plan-name" id="' + titleId + '">' + esc(p.name) + '</h3>' +
         '<p class="plan-tagline">' + esc(p.tagline) + '</p>' +
-        '<p class="plan-price"><span class="cur">' + esc(p.price.currency) + '</span><span class="amt">' + esc(p.price.amount) + '</span>' +
+        anchorHTML(p) +
+        '<p class="plan-price' + (p.price.was ? ' has-anchor' : '') + '">' + (p.price.was ? '<span class="por">por</span>' : '') +
+          '<span class="cur">' + esc(p.price.currency) + '</span><span class="amt">' + amountHTML(p.price.amount) + '</span>' +
           '<span class="per' + (p.billingPeriod === 'one-time' ? ' per-once' : '') + '">' + esc(p.billingLabel) + '</span></p>' +
         '<p class="plan-devices">' + ICON.monitor + '<span>' + esc(p.deviceLimit.label) + '</span></p>' +
         /* sempre presente (vazio quando não há nota) para alinhar as linhas dos três cartões no desktop */
         '<p class="plan-devices-note"' + (p.deviceLimit.note ? '>' + esc(p.deviceLimit.note) : ' aria-hidden="true">') + '</p>' +
         '<p class="plan-desc">' + esc(p.description) + '</p>' +
-        '<a class="plan-cta" href="' + esc(p.callToAction.href) + '">' + esc(p.callToAction.label) + '</a>' +
+        /* com link do Mercado Pago, o botão abre o checkout dele (mesma aba) */
+        '<a class="plan-cta" href="' + esc(p.callToAction.href) + '"' +
+          (p.callToAction.checkout ? ' rel="noopener" data-checkout="mercadopago" aria-label="' + esc(p.callToAction.label) + ' — pagamento pelo Mercado Pago"' : '') + '>' +
+          esc(p.callToAction.label) + '</a>' +
         '<div class="plan-body">' +
           '<ul class="plan-primary">' + p.primaryFeatures.map(featureHTML).join('') + '</ul>' +
           (p.scopeNote ? '<p class="plan-scope">' + esc(p.scopeNote) + '</p>' : '') +

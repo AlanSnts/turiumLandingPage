@@ -18,10 +18,17 @@ test('três planos, na ordem Básico, Pro, Enterprise', () => {
   assert.deepStrictEqual(PLANS.map(p => p.id), ['basico', 'pro', 'enterprise']);
 });
 test('preços corretos', () => {
-  assert.strictEqual(byId.basico.price.amount, '200');
+  assert.strictEqual(byId.basico.price.amount, '199,90');
   assert.strictEqual(byId.pro.price.amount, '450');
-  assert.strictEqual(byId.enterprise.price.amount, '1.000');
+  assert.strictEqual(byId.enterprise.price.amount, '999');
   PLANS.forEach(p => assert.strictEqual(p.price.currency, 'R$'));
+});
+test('ancoragem: preço anterior maior que o atual', () => {
+  const n = s => parseFloat(s.replace(/\./g, '').replace(',', '.'));
+  assert.strictEqual(byId.basico.price.was, '350');
+  assert.strictEqual(byId.pro.price.was, '670');
+  assert.strictEqual(byId.enterprise.price.was, '1.800');
+  PLANS.forEach(p => assert.ok(n(p.price.was) > n(p.price.amount), p.id));
 });
 test('periodicidade: Básico único, Pro e Enterprise mensais', () => {
   assert.strictEqual(byId.basico.billingPeriod, 'one-time');
@@ -47,6 +54,17 @@ test('botões de contratação com os textos definidos', () => {
   assert.strictEqual(byId.basico.callToAction.label, 'Comprar licença');
   assert.strictEqual(byId.pro.callToAction.label, 'Assinar Turium Pro');
   assert.strictEqual(byId.enterprise.callToAction.label, 'Contratar Enterprise');
+});
+test('checkout: links só do Mercado Pago (https) e nenhum token no site', () => {
+  const fs = require('fs');
+  const { CHECKOUT } = require(path.join(__dirname, '..', 'js', 'plans.js'));
+  assert.deepStrictEqual(Object.keys(CHECKOUT).sort(), ['basico', 'enterprise', 'pro']);
+  Object.entries(CHECKOUT).forEach(([id, url]) => {
+    if (url) assert.match(url, /^https:\/\/(www\.)?mercadopago\.com\.br\//, id);
+    assert.strictEqual(byId[id].callToAction.href, url || '#comecar', id);
+  });
+  const src = fs.readFileSync(path.join(__dirname, '..', 'js', 'plans.js'), 'utf8');
+  assert.ok(!/(APP_USR|TEST)-\d{6,}/.test(src), 'plans.js não pode conter Access Token');
 });
 test('Básico não anuncia NF-e/NFC-e nem LAN multi-PC', () => {
   assert.strictEqual(find(byId.basico, 'NF-e / NFC-e').status, 'unavailable');
